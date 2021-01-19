@@ -21,7 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-public class Process {
+public class       Process {
 
 	public static void main(String[] args)   {
 	Scanner scan = new Scanner(System.in);

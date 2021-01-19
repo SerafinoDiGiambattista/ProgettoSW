@@ -1,4 +1,4 @@
- 
+import javax.swing.JFileChooser
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
@@ -32,12 +32,13 @@ run{
     standardInput = System.in
 }
 
-tasks.named('test') {
-    // Use junit platform for unit tests.
-    useJUnitPlatform()
+apply plugin: ControllPlugin
+prova {
+    estensione {
+        file1 = file('config/Controll/config.properties')
+    }
 }
 
 
-apply plugin : ControllPlugin
 
 
