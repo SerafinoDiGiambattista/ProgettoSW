@@ -1,11 +1,10 @@
 import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.TaskAction
-
-import javax.swing.JFrame
-import javax.swing.JScrollPane
 import javax.swing.JTable
+import org.codehaus.groovy.control.messages.WarningMessage
 
 class ControllTask extends DefaultTask{
 @InputFile
@@ -62,34 +61,40 @@ JTable table
          return;
       }
 
-      //trovo il numero della colonna da considerare
+      //trovo il numero della colonna da considerare metterlo in metodo
       int column =0
+       boolean pass = false
       for(int i=0; i<table.getColumnCount(); i++){
          if(res.get(0).equals(table.getColumnName(i).toString())){
             column=i
+             pass=true
+
          }
       }
-      //nome della classe e in questo caso considero tutte le classi
-      if(res.get(1).equals('*')){
+       //tutto il for metterlo in un metodo?
+       //if(!pass) ricorda significa che pass è false
+       //era possibile fare in unico for mettendo un altro if
+       //NOTA possiamo mettere una failure nel caso in cui il nome della classe\package non è valido (forse basta mettere un altro if contente la failure???)
+          for(int j=0; j<table.getRowCount(); j++) {
+              if (res.get(1).equals('*') || res.get(1).equals( table.getModel().getValueAt(j, 0).toString())){
+                  if (Integer.parseInt(res.get(2)) < Integer.parseInt(table.getModel().getValueAt(j, column))) {
+                      if (res.get(3).equals('f')) {
+                          throw new ThresholdExceededException("La soglia del parametro " + res.get(0) + " e stata superata");
+                      } else if (res.get(3).equals('w')) {
+                          //idea priorittizare rispetto in base alla differenza tra la soglia impostato e della classe considerata ma il problema è che si deve fare per ogni parametro ;-(
+                          def war = new WarningMessage(j, 'Warning:' + res.get(0) + ' Soglia superata della classe : ' + table.getModel().getValueAt(j, 0).toString(), null, null)
+                          println war.getMessage()
+                      }
+                  }
 
-
-
-          for(int j=0; j<table.getRowCount(); j++){
-
-         if(Integer.parseInt(res.get(2))<Integer.parseInt(table.getModel().getValueAt(j,column))){
-             if(res.get(3).equals('f')){
-               throw new ThresholdExceededException("La soglia del parametro "+res.get(0)+" e stata superata");
-            }
-         }
-
-
-
-      }
-
-
-
+          }
 
       }
+
+
+
+
+
 }
    }
 

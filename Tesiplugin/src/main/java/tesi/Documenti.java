@@ -34,7 +34,7 @@ public class Documenti {
 		        
 		            String name = file.getName().replace("cs", "xml");
 		          //  System.out.println("\n"+file.getParent());
-		            processBuilder.command( "C:\\Users\\Serafino\\Documents\\Esercizio\\tesi\\app\\src\\main\\java\\tesi\\srcML-Win-64\\srcML-Win\\bin\\srcml", file.getAbsolutePath(), "-o", file.getParent()+"\\"+name);
+		            processBuilder.command( "srcML-Win-64\\srcML-Win\\bin\\srcml", file.getAbsolutePath(), "-o", file.getParent()+"\\"+name);
 		          
 		        	  try {
 		        		  java.lang.Process process =	processBuilder.start();
