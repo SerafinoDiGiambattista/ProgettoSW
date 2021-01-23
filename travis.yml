@@ -4,6 +4,7 @@ matrix:
 script: "$JOB"
 
 notifications:
+slack: progettosw:FEJATaBGjUt1VrlfrJJqzyL9
   email:
     recipients:
        - s.digiambattista1@studenti.unisannio.it 
