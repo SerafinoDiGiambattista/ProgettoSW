@@ -9,3 +9,5 @@ notifications:
        - s.digiambattista1@studenti.unisannio.it 
     on_success: always
     on_failure: always
+   
+  slack: progettosw:KWgUv6xVIzpRsxYWt2YrLIM0
