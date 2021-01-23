@@ -1,6 +1,5 @@
-matrix:
-  - JOB="./gradlew build"
-script: "$JOB"
+ 
+script: ./gradlew build"
 
 notifications: 
  slack: progettosw:KWgUv6xVIzpRsxYWt2YrLIM0
