@@ -5,7 +5,7 @@ import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.TaskAction
 import javax.swing.JTable
 import org.codehaus.groovy.control.messages.WarningMessage
-
+//L'obbiettivo è capire travis
 class ControllTask extends DefaultTask{
 @InputFile
 final Property<File> file2 = project.objects.property(File)
