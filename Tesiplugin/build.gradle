@@ -12,23 +12,23 @@ ext {
     checkstyleVersion = '7.2'
 }
 
-//adesso sono un commento che serve per capire come funzione git
-
-
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
 }
 
 dependencies {
+   
     // Use JUnit Jupiter API for testing.
-    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 
     // Use JUnit Jupiter Engine for testing.
-    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
     // This dependency is used by the application.
-    //implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'com.google.guava:guava:29.0-jre'
+
+
 }
 
 application {
