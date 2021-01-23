@@ -1,0 +1,11 @@
+matrix:
+  - JOB="./gradlew build"
+script: "$JOB"
+
+notifications:
+  email:
+    recipients:
+       - j.inglese@studenti.unisannio.it 
+       - s.digiambattista1@studenti.unisannio.it 
+    on_success: always
+    on_failure: always
