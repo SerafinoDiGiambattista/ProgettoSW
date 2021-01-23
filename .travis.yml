@@ -2,6 +2,7 @@ matrix:
   - JOB="./gradlew build"
 script: "$JOB"
 
+
 notifications:
   slack: progettosw:cHwelSuIlH4TSyeMiMYYaIZp
   email: 
