@@ -1,10 +1,9 @@
-//questo è il file travis è di Serafino 
 matrix:
   - JOB="./gradlew build"
 script: "$JOB"
 
 notifications:
-slack: progettosw:FEJATaBGjUt1VrlfrJJqzyL9
+ slack: progettosw:kj79uEamCYqrhNOGipadXZLb
   email:
     recipients:
        - s.digiambattista1@studenti.unisannio.it 
