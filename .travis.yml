@@ -1,12 +1,13 @@
 matrix:
-  - JOB="./gradlew build"
+- JOB="./gradlew build"
+
 script: "$JOB"
 
 notifications:
-  slack: progettosw:cHwelSuIlH4TSyeMiMYYaIZp
-  email: 
-     recipients:
-       - j.inglese@studenti.unisannio.it 
-       - s.digiambattista1@studenti.unisannio.it 
-    on_success: always
-    on_failure: always
+slack: progettosw:cHwelSuIlH4TSyeMiMYYaIZp
+email:
+recipients:
+- j.inglese@studenti.unisannio.it 
+- s.digiambattista1@studenti.unisannio.it 
+on_success: always
+on_failure: always
