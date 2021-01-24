@@ -34,7 +34,53 @@ final Property<File> file2 = project.objects.property(File)
 
    }
 
+int ContaColonna( Vector<String> res,JTable table ){
+    boolean pass = false
+    int column =0
+    for (int i = 0; i < table.getColumnCount(); i++) {
+        if (res.get(0).equals(table.getColumnName(i).toString())) {
+            column = i
+            pass = true
 
+        }
+    }
+     column
+}
+
+  void  ControlloTabella(JTable table, Vector<String> res, int column){
+
+      for(int j=0; j<table.getRowCount(); j++) {
+          if (res.get(1).equals('*') || res.get(1).equals( table.getModel().getValueAt(j, 0).toString())){
+              if (Integer.parseInt(res.get(2)) < Integer.parseInt(table.getModel().getValueAt(j, column))) {
+                  if (res.get(3).equals('f')) {
+                      throw new ThresholdExceededException("La soglia del parametro " + res.get(0) + " e stata superata");
+                  } else if (res.get(3).equals('w')) {
+                      //idea priorittizare rispetto in base alla differenza tra la soglia impostato e della classe considerata ma il problema è che si deve fare per ogni parametro ;-(
+                      def war = new WarningMessage(j, 'Warning:' + res.get(0) + ' Soglia superata della classe : ' + table.getModel().getValueAt(j, 0).toString(), null, null)
+                      println war.getMessage()
+                  }
+              }
+
+          }
+
+      }
+  }
+
+    void ControlloTabellaNoc(JTable table, Vector<String> res){
+        for(int j=0; j<table.getRowCount(); j++) {
+            if(res.get(0).equals('*') || res.get(0).equals(table.getModel().getValueAt(j,0).toString())){
+                if(Integer.parseInt(res.get(1))<Integer.parseInt(table.getModel().getValueAt(j,1))){
+                    if (res.get(2).equals('f')) {
+                        throw new ThresholdExceededException("La soglia del parametro " + res.get(0) + " e stata superata");
+                    } else if (res.get(2).equals('w')) {
+                        //idea priorittizare rispetto in base alla differenza tra la soglia impostato e della classe considerata ma il problema è che si deve fare per ogni parametro ;-(
+                        def war = new WarningMessage(j, 'Warning:' + res.get(0) + ' Soglia superata della classe : ' + table.getModel().getValueAt(j, 0).toString(), null, null)
+                        println war.getMessage()
+                    }
+                }
+            }
+        }
+    }
 
    @TaskAction
 
@@ -61,36 +107,20 @@ JTable table
          return;
       }
 
-      //trovo il numero della colonna da considerare metterlo in metodo
+      //trovo il numero della colonna da considerare metterlo in metodo??
       int column =0
-       boolean pass = false
-      for(int i=0; i<table.getColumnCount(); i++){
-         if(res.get(0).equals(table.getColumnName(i).toString())){
-            column=i
-             pass=true
 
+         if(res.size()==4){
+             column = ContaColonna(res,table)
          }
-      }
+
        //tutto il for metterlo in un metodo?
        //if(!pass) ricorda significa che pass è false
        //era possibile fare in unico for mettendo un altro if
        //NOTA possiamo mettere una failure nel caso in cui il nome della classe\package non è valido (forse basta mettere un altro if contente la failure???)
-          for(int j=0; j<table.getRowCount(); j++) {
-              if (res.get(1).equals('*') || res.get(1).equals( table.getModel().getValueAt(j, 0).toString())){
-                  if (Integer.parseInt(res.get(2)) < Integer.parseInt(table.getModel().getValueAt(j, column))) {
-                      if (res.get(3).equals('f')) {
-                          throw new ThresholdExceededException("La soglia del parametro " + res.get(0) + " e stata superata");
-                      } else if (res.get(3).equals('w')) {
-                          //idea priorittizare rispetto in base alla differenza tra la soglia impostato e della classe considerata ma il problema è che si deve fare per ogni parametro ;-(
-                          def war = new WarningMessage(j, 'Warning:' + res.get(0) + ' Soglia superata della classe : ' + table.getModel().getValueAt(j, 0).toString(), null, null)
-                          println war.getMessage()
-                      }
-                  }
 
-          }
-
-      }
-
+if(column!=0)   ControlloTabella(table, res,column)
+if(column==0)   ControlloTabellaNoc(table, res)
 
 
 
