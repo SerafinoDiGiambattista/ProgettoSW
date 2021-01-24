@@ -3,9 +3,11 @@ matrix:
 script: "$JOB"
 
 notifications:
-slack: progettosw:bFuaa6DM29GcOUmWYvlwI10g
-email: 
-recipients:
-- j.inglese@studenti.unisannio.it 
-on_success: always
-on_failure: always
+
+  slack: progettosw:bFuaa6DM29GcOUmWYvlwI10g
+
+  email: 
+    recipients:
+     - j.inglese@studenti.unisannio.it 
+    on_success: always
+    on_failure: always
