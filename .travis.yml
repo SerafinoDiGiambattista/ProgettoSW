@@ -2,9 +2,9 @@
 jobs:
     include:
        - stage: build
-         script: ./gradlew build
+         script: gradle build
        - stage: prova
-         script: ./gradlew prova
+         script: gradle prova
 
 notifications:
 
