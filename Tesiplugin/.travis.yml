@@ -1,0 +1,14 @@
+jobs:
+    include:
+       - stage: build
+         script: gradle build
+       - stage: prova
+         script: gradle prova
+
+notifications:
+
+  slack: progettosw:4IlyRyROlLmCEaqUVSzx9bG5
+
+
+    on_success: always
+    on_failure: always
