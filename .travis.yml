@@ -1,7 +1,10 @@
     
-    matrix:
-- JOB="./gradlew build"
-script: "$JOB"
+jobs:
+    include:
+       - stage: build
+         script: ./gradlew build
+       - stage: prova
+         script: ./gradlew prova
 
 notifications:
 
