@@ -1,5 +1,6 @@
-
- script: ./gradlew build
+matrix:
+- JOB="./gradlew build"
+script: "$JOB"
          
        
 
