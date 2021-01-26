@@ -2,10 +2,9 @@
 
 jobs:
     include:
-       - stage: build
+    
          script: ./gradlew build
-       - stage: check
-          script: ./gradlew check   
+         
        
 
 notifications:
