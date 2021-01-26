@@ -1,9 +1,5 @@
 
-
-jobs:
-    include:
-    
-         script: ./gradlew build
+ script: ./gradlew build
          
        
 
