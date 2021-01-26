@@ -3,9 +3,9 @@
 jobs:
     include:
        - stage: build
-         script: gradle build
+         script: ./gradlew build
        - stage: check
-          script: gradle check   
+          script: ./gradlew check   
        
 
 notifications:
