@@ -2,19 +2,19 @@ tesi/Dit.java
  tesi.Dit
 tesi/Wmc.java
  tesi.Wmc
-tesi/Rfc.java
- tesi.Rfc
+tesi/Documenti.java
+ tesi.Documenti
 tesi/Matrice.java
  tesi.Matrice
 tesi/Locc.java
  tesi.Locc
 tesi/Lcom.java
  tesi.Lcom
-tesi/Cbo.java
- tesi.Cbo
-tesi/Noc.java
- tesi.Noc
-tesi/Documenti.java
- tesi.Documenti
 tesi/Process.java
  tesi.Process
+tesi/Noc.java
+ tesi.Noc
+tesi/Cbo.java
+ tesi.Cbo
+tesi/Rfc.java
+ tesi.Rfc

@@ -1,9 +1,9 @@
 
-
 jobs:
     include:
        - stage: build
          script: gradle build
+         
        
 
 notifications:
