@@ -12,6 +12,7 @@ final Property<File> file2 = project.objects.property(File)
      COSA DA MIGLIORARE
      mettere le variabili di istanza private per il vettore res così il codice diventa più pulito
      mettere le varie eccezioni quando il formato del file non è rispettato
+     ipotetico vedere se il formato file di configurazione accetta spazi vuoti
       */
     // queso metodo mi permette di prendere le varie sottostringhe da una stringa
    static Vector<String> splitString(String valor, char lim){
