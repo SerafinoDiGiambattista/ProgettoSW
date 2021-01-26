@@ -1,3 +1,4 @@
+
 jobs:
     include:
        - stage: build
@@ -9,5 +10,4 @@ notifications:
   slack: progettosw:4IlyRyROlLmCEaqUVSzx9bG5
 
 
-    on_success: always
-    on_failure: always
+

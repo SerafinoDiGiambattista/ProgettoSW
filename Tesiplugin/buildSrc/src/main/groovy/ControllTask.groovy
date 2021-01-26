@@ -127,4 +127,3 @@ if(column==0)   ControlloTabellaNoc(table, res)
 
 }
    }
-
