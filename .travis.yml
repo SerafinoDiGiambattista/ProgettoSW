@@ -1,16 +1,15 @@
-matrix:
-- JOB="./gradlew build"
 
-script: "$JOB"
+
+jobs:
+    include:
+       - stage: build
+         script: gradle build
+       
 
 notifications:
 
- slack: progettosw:cHwelSuIlH4TSyeMiMYYaIZp
- 
- email:
- 
-   recipients:
-    - j.inglese@studenti.unisannio.it 
-    - s.digiambattista1@studenti.unisannio.it 
-   on_success: always
-   on_failure: always
+  slack: progettosw:4IlyRyROlLmCEaqUVSzx9bG5
+
+
+
+
