@@ -48,9 +48,13 @@ int ContaColonna( Vector<String> res,JTable table ){
 }
 
   void  ControlloTabella(JTable table, Vector<String> res, int column){
+    String nomeclasse = table.getModel().getValueAt(j, 0).toString()
+    String ricerca =""
+      if(res.get(1).contains('*')) ricerca=res.get(1).replace('*','')
+    println(res.get(1).toString())
 
       for(int j=0; j<table.getRowCount(); j++) {
-          if (res.get(1).equals('*') || res.get(1).equals( table.getModel().getValueAt(j, 0).toString())){
+          if (res.get(1).equals('*') || res.get(1).equals(nomeclasse) ){
               if (Integer.parseInt(res.get(2)) < Integer.parseInt(table.getModel().getValueAt(j, column))) {
                   if (res.get(3).equals('f')) {
                       throw new ThresholdExceededException("La soglia del parametro " + res.get(0) + " e stata superata");
@@ -67,6 +71,9 @@ int ContaColonna( Vector<String> res,JTable table ){
   }
 
     void ControlloTabellaNoc(JTable table, Vector<String> res){
+
+        print(res.get(0).replace('*',''))
+
         for(int j=0; j<table.getRowCount(); j++) {
             if(res.get(0).equals('*') || res.get(0).equals(table.getModel().getValueAt(j,0).toString())){
                 if(Integer.parseInt(res.get(1))<Integer.parseInt(table.getModel().getValueAt(j,1))){
