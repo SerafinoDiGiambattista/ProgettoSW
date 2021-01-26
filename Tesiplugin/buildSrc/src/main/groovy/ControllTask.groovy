@@ -1,20 +1,22 @@
 import org.gradle.api.DefaultTask
-import org.gradle.api.GradleException
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.TaskAction
 import javax.swing.JTable
 import org.codehaus.groovy.control.messages.WarningMessage
-//adesso vediamo sluk come fare
+
 class ControllTask extends DefaultTask{
 @InputFile
 final Property<File> file2 = project.objects.property(File)
-
+    /*
+     COSA DA MIGLIORARE
+     mettere le variabili di istanza private per il vettore res così il codice diventa più pulito
+     mettere le varie eccezioni quando il formato del file non è rispettato
+      */
+    // queso metodo mi permette di prendere le varie sottostringhe da una stringa
    static Vector<String> splitString(String valor, char lim){
-   /*
-   queso metodo mi permette di prendere le varie sottostringhe da una stringa
-    */
-      String word = ""
+
+       String word = ""
 
       Vector<String> sub_string = new Vector<String>()
       for (int i =0; i<valor.length(); i++){
@@ -48,13 +50,13 @@ int ContaColonna( Vector<String> res,JTable table ){
 }
 
   void  ControlloTabella(JTable table, Vector<String> res, int column){
-    String nomeclasse = table.getModel().getValueAt(j, 0).toString()
-    String ricerca =""
-      if(res.get(1).contains('*')) ricerca=res.get(1).replace('*','')
-    println(res.get(1).toString())
+
+        String ricerca=''
+        if(res.get(1).contains("*"))  ricerca=res.get(1).replace('*','')
 
       for(int j=0; j<table.getRowCount(); j++) {
-          if (res.get(1).equals('*') || res.get(1).equals(nomeclasse) ){
+          String nome_classe = table.getModel().getValueAt(j, 0).toString()
+          if (res.get(1).equals('*') || res.get(1).equals(nome_classe) || nome_classe.contains(ricerca) ){
               if (Integer.parseInt(res.get(2)) < Integer.parseInt(table.getModel().getValueAt(j, column))) {
                   if (res.get(3).equals('f')) {
                       throw new ThresholdExceededException("La soglia del parametro " + res.get(0) + " e stata superata");
@@ -72,10 +74,12 @@ int ContaColonna( Vector<String> res,JTable table ){
 
     void ControlloTabellaNoc(JTable table, Vector<String> res){
 
-        print(res.get(0).replace('*',''))
+        String ricerca=''
+        if(res.get(0).contains("*"))  ricerca=res.get(0).replace('*','')
 
         for(int j=0; j<table.getRowCount(); j++) {
-            if(res.get(0).equals('*') || res.get(0).equals(table.getModel().getValueAt(j,0).toString())){
+            String nome_classe = table.getModel().getValueAt(j, 0).toString()
+            if(res.get(0).equals('*') || res.get(0).equals(nome_classe) || nome_classe.contains(ricerca)){
                 if(Integer.parseInt(res.get(1))<Integer.parseInt(table.getModel().getValueAt(j,1))){
                     if (res.get(2).equals('f')) {
                         throw new ThresholdExceededException("La soglia del parametro " + res.get(0) + " e stata superata");
@@ -90,8 +94,12 @@ int ContaColonna( Vector<String> res,JTable table ){
     }
 
    @TaskAction
-
+/*
+la lettura del file di configurazione non accetta spazi vuoi.
+Dobbiamo rivedere la sua lettura oppure no?
+ */
 def prova() {
+
    //aggiungere try catch per pulizia e corretezza programma
    InputStream input = new FileInputStream(file2.get())
    Properties prop = new Properties()
@@ -121,10 +129,9 @@ JTable table
              column = ContaColonna(res,table)
          }
 
-       //tutto il for metterlo in un metodo?
+
        //if(!pass) ricorda significa che pass è false
-       //era possibile fare in unico for mettendo un altro if
-       //NOTA possiamo mettere una failure nel caso in cui il nome della classe\package non è valido (forse basta mettere un altro if contente la failure???)
+
 
 if(column!=0)   ControlloTabella(table, res,column)
 if(column==0)   ControlloTabellaNoc(table, res)
