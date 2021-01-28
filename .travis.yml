@@ -1,8 +1,5 @@
-jobs:
-  include:
-    - stage: build
-      script: "./gradlew build"
-
+script:
+  - ./gradlew build 
 
 
 notifications:
