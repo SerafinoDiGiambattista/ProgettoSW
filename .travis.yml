@@ -1,6 +1,6 @@
 script:
   - cd Tesiplugin
-  - gradle prova
+  - ./gradlew build
 
 
 notifications:
