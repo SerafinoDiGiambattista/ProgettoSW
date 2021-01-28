@@ -8,7 +8,7 @@ jdk: oraclejdk8
 
 script:  
  - cd Tesiplugin
- - gradle assemble
+ - gradle build
 
 
 notifications:
