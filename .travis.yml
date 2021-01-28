@@ -1,8 +1,14 @@
 
+language: java
+install: skip
 
-script:
-  - cd Tesiplugin
-  - gradle build 
+os: linux
+dist: trusty
+jdk: oraclejdk8
+
+script:  
+ - cd Tesiplugin
+ - ./gradlew build --scan -s
 
 
 notifications:
