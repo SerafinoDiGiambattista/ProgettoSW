@@ -1,5 +1,5 @@
 script:
-  - cd /Tesiplugin
+  - cd '/Tesiplugin'
   - gradle build
 
 
