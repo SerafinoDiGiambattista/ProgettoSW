@@ -2,14 +2,13 @@
 language: java
 language: groovy
 install: skip
-
 os: linux
 dist: trusty
 jdk: oraclejdk8
 
 script:  
  - cd Tesiplugin
- - gradle build
+ - gradle assemble
 
 
 notifications:
