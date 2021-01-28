@@ -7,11 +7,11 @@ plugins {
     id 'java-gradle-plugin'
     id 'groovy'
     id 'checkstyle'
-    id 'codenarc'
+   // id 'codenarc'
 }
 ext {
     checkstyleVersion = '7.2'
-    codeNarcVersion= '2.0.0'
+   // codeNarcVersion= '2.0.0'
 }
 
 repositories {
@@ -54,21 +54,24 @@ checkstyle {
 }
 
 
-
+/*
 codenarc{
 
     toolVersion= codeNarcVersion
     config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
 
 }
+
+ */
 checkstyleMain {
     source ='src/main/java'
 }
 checkstyleTest {
     source ='src/test/java'
 }
+/*
 codenarcMain{
     source = 'buildSrc/src/main/groovy'
 }
-
+ */
 
