@@ -1,4 +1,8 @@
 language: java
+install: skip
+
+
+dist: trusty
 jdk: oraclejdk11
 
 script:
