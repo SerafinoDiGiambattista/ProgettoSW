@@ -1,9 +1,9 @@
 script:
   - cd Tesiplugin
-  - gradle build
+  - gradle prova
 
 
 notifications:
 
-  slack: progettosw:Qq0akOe8O6Spiu1FjUmijk1U
+  slack: progettosw:HrJFi0C5EVvaQOJDp2vw8M3Q
 
