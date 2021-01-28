@@ -2,6 +2,8 @@
   language: java
   language: groovy
 
+os: linux
+dist: trusty
 jdk:
   - openjdk11
 
