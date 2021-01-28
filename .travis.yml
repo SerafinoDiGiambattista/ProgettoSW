@@ -1,7 +1,7 @@
 
 script:
   - cd Tesiplugin
-  - ./gradlew build
+  - gradle build
 
 
 notifications:
