@@ -1,12 +1,8 @@
 
-language: java
-language: groovy
-
-
 
 script:  
  - cd Tesiplugin
- - gradle build
+
 
 
 notifications:
