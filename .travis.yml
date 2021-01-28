@@ -1,11 +1,9 @@
-
-jobs:
-  include:
-    - stage: build
-      script: gradle build
-
+script:
+  - cd Tesiplugin
+  - ./gradlew build
 
 
 notifications:
 
-  slack: progettosw:Qq0akOe8O6Spiu1FjUmijk1U
+  slack: progettosw:HrJFi0C5EVvaQOJDp2vw8M3Q
+
