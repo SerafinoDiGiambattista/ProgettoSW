@@ -1,0 +1,11 @@
+jobs:
+  include:
+    - stage: build
+      script: "./gradlew build"
+
+
+
+notifications:
+
+  slack: progettosw:Qq0akOe8O6Spiu1FjUmijk1U
+
