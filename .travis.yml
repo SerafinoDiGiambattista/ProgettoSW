@@ -3,7 +3,6 @@
   language: groovy
 
 jdk:
-  - oraclejdk11
   - openjdk11
 
 script:  
