@@ -1,7 +1,7 @@
 jobs:
   include:
     - stage: build
-      script: gradle build
+      script: "./gradlew build"
 
 
 
