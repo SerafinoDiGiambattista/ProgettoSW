@@ -1,3 +1,5 @@
+before_install:
+- chmod +x gradlew
 script:
   - cd Tesiplugin
   - ./gradlew build
