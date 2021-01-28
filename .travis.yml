@@ -3,7 +3,7 @@ install: skip
 
 os: linux
 dist: trusty
-jdk: oraclejdk11
+jdk: oraclejdk15
 
 script:
   - cd Tesiplugin
