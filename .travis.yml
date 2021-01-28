@@ -4,7 +4,7 @@ language: groovy
 install: skip
 os: linux
 dist: trusty
-jdk: oraclejdk8
+jdk: oraclejdk11
 
 script:  
  - cd Tesiplugin
