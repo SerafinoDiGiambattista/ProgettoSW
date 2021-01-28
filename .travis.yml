@@ -1,5 +1,6 @@
 
 language: java
+language: groovy
 install: skip
 
 os: linux
