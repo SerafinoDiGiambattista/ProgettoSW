@@ -1,13 +1,13 @@
 language: java
 install: skip
 
-
+os: linux
 dist: trusty
 jdk: oraclejdk11
 
 script:
   - cd Tesiplugin
-  - gradle build
+  - ./gradlew build 
 
 
 notifications:
