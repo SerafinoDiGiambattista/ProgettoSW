@@ -3,7 +3,7 @@
 script:  
  - cd Tesiplugin
  - gradle assemble
- - gradle build
+
 
 
 notifications:
