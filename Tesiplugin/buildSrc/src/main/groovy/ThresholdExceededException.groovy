@@ -1,6 +1,10 @@
+import groovy.transform.CompileStatic
+
+@CompileStatic
 class ThresholdExceededException extends Exception{
 
-    public ThresholdExceededException(String message){
+    ThresholdExceededException(String message) {
         super(message)
     }
+
 }

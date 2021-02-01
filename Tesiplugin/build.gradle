@@ -61,14 +61,17 @@ codenarc{
     config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
 
 }
+
+ 
 checkstyleMain {
     source ='src/main/java'
 }
 checkstyleTest {
     source ='src/test/java'
 }
+
 codenarcMain{
     source = 'buildSrc/src/main/groovy'
 }
-
+ 
 

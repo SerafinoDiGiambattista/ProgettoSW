@@ -8,7 +8,7 @@ class ControllPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        def ext = project.extensions.create('estensione', ControllExtension)
+        ControllExtension ext = project.extensions.create('estensione', ControllExtension)
 
         project.tasks.create('prova', ControllTask) {
             group = 'Publishing'
