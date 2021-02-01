@@ -54,7 +54,7 @@ checkstyle {
 }
 
 
-/*
+
 codenarc{
 
     toolVersion= codeNarcVersion
@@ -62,16 +62,16 @@ codenarc{
 
 }
 
- */
+ 
 checkstyleMain {
     source ='src/main/java'
 }
 checkstyleTest {
     source ='src/test/java'
 }
-/*
+
 codenarcMain{
     source = 'buildSrc/src/main/groovy'
 }
- */
+ 
 
