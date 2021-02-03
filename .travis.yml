@@ -1,6 +1,13 @@
 language:
 - java
 - groovy
+ 
+jdk:
+  - oraclejdk8
+
+before_install:
+  - gradle -b wrapper.gradle wrapper
+
 script: 
 - cd Tesiplugin && gradle build
 
