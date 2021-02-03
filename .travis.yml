@@ -2,8 +2,7 @@ language:
 - java
 - groovy
 
-os: windows
-  
+
 jobs:
  include:
   - stage: compile
