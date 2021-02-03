@@ -32,7 +32,9 @@ dependencies {
 
 
 }
-
+check.doFirst {
+	println "Running gradle v${project.gradle.gradleVersion}"
+}
 run{
     standardInput = System.in
 }
