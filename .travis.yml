@@ -1,9 +1,3 @@
-language: java
-script: cd Tesiplugin && ./gradlew build
-
-notifications:
-slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
-
 email:
 recipients:
 -j.inglese@studenti.unisannio.it
