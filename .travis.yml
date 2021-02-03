@@ -2,11 +2,13 @@ language: java
 script: cd Tesiplugin && ./gradlew build
 
 notifications:
+ 
+  slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
 
-slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
-email:
+  email: 
 
-recipients:
--j.inglese@studenti.unisannio.it
-on_success: always
-on_failure: always
+     recipients:
+    
+     -j.inglese@studenti.unisannio.it
+     on_success: always
+     on_failure: always
