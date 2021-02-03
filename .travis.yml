@@ -2,8 +2,7 @@ language:
 - java
 - groovy
 script: 
-- cd Tesiplugin && gradle install
-- ./gradlew
+- cd Tesiplugin && gradle build
 
 notifications:
  
