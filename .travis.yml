@@ -4,13 +4,14 @@ language:
  
 
 jobs:
-include:
-- stage: compile
-script: cd Tesiplugin && gradle compileJava
-- stage: test
-script: gradle test
-- stage: jar
-script: gradle jar
+ include:
+  - stage: compile
+    script: gradle compileJava 
+  - stage: test
+    script : gradle test
+  - stage: jar
+    script: gradle jar
+ 
 
 notifications:
  
