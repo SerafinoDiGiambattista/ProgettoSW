@@ -1,7 +1,6 @@
-matrix:
-- JOB="./gradlew build"
+-language: java
 
-script: "$JOB"
+script: cd Tesipulgin && ./gradlew build
 notifications:
 slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
 
