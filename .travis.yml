@@ -1,12 +1,13 @@
-matrix:
-- JOB="./gradlew build"
-script: "$JOB"
+language : java
 
-notifications:  
-  slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
+script: cd Tesiplugin && ./gradlew build
 
-  email: 
-    recipients:
-     - j.inglese@studenti.unisannio.it 
-    on_success: always
-    on_failure: always
+notifications:
+
+slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
+
+email:
+recipients:
+-j.inglese@studenti.unisannio.it 
+on_success: always
+on_failure: always
