@@ -1,5 +1,5 @@
 language: java
-script: gradle build
+script: gradle build --scan
 
 notifications:
  
