@@ -1,5 +1,7 @@
-language: java
-script: gradle build --scan
+language:
+- java
+- groovy
+script: gradle build 
 
 notifications:
  
