@@ -1,3 +1,4 @@
+
 language: java
 script: cd Tesiplugin && ./gradlew build
 
