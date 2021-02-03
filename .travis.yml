@@ -1,5 +1,5 @@
 language: java
-script: cd Tesiplugin && ./gradlew build
+script: cd Tesiplugin && gradle build
 
 notifications:
  
