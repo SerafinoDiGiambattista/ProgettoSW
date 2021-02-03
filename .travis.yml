@@ -5,5 +5,5 @@ os: linux
 dist: trusty
 jdk: oraclejdk8
 
-script: cd Tesiplugin && gradlew
+script: - ./gradlew build --scan -s
  
