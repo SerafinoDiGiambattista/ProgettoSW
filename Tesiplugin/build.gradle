@@ -39,7 +39,7 @@ run{
 
 application {
     // Define the main class for the application.
-    mainClass = 'Process'
+    mainClass = 'Tesiplugin.src.main.java.tesi.Process.java'
 }
 
 apply plugin: ControllPlugin
