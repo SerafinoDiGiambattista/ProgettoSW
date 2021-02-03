@@ -1,0 +1,2 @@
+notifications:
+  slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
