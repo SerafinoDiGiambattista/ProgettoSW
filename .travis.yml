@@ -6,7 +6,7 @@ language:
 jobs:
  include:
   - stage: compile
-    script: gradle build
+    script: cd ProgettoSW/Tesiplugin && gradle build
  
 
 notifications:
