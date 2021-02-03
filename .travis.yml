@@ -3,11 +3,14 @@ language:
 - groovy
  
 
-before_install:
- - cd Tesiplugin\gradle\wrapper && gradle wrapper
- 
-script: 
-- cd Tesiplugin && gradle build
+jobs:
+include:
+- stage: compile
+script: cd Tesiplugin && gradle compileJava
+- stage: test
+script: gradle test
+- stage: jar
+script: gradle jar
 
 notifications:
  
