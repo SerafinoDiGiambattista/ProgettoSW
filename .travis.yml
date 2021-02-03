@@ -4,7 +4,7 @@ language:
  
 
 before_install:
- - cd Tesiplugin\gradle\wrapper & gradle wrapper
+ - cd Tesiplugin\gradle\wrapper && gradle wrapper
 
 script: 
 - cd Tesiplugin && gradle build
