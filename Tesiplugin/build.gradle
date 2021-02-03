@@ -42,7 +42,7 @@ application {
     mainClassName = 'src.main.java.tesi.Process.java'
 }
 
-apply plugin: ControllPlugin
+apply plugin: 'ControllPlugin'
 prova {
     estensione {
         file1 = file('config/Controll/config.properties')
