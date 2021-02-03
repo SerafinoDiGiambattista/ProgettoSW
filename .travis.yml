@@ -14,5 +14,5 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper
     
-script: Tesiplugin && gradle build
+script: cd Tesiplugin && gradle build
  
