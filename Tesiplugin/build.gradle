@@ -14,9 +14,6 @@ ext {
     codeNarcVersion= '2.0.0'
 }
 
-apply plugin: application
-mainClass = 'tesi.Process'
-
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
@@ -38,6 +35,11 @@ dependencies {
 
 run{
     standardInput = System.in
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'java/tesi/Process.java'
 }
 
 apply plugin: ControllPlugin
