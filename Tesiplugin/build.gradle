@@ -32,7 +32,7 @@ dependencies {
 
 
 }
-
+apply plugin: application
 application {
     // Define the main class for the application.
     mainClass = 'tesi/Process.java'
