@@ -6,4 +6,4 @@ matrix:
     
     - language: groovy
         before_script: cd Tesiplugin
-        script : gradle compileGroovy
+        script : gradle build
