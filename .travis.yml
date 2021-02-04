@@ -3,7 +3,6 @@ matrix:
     - language: java
         before_script: cd Tesiplugin
         script : gradle check
-    
     - language: groovy
         before_script: cd Tesiplugin
         script : gradle build
