@@ -1,9 +1,7 @@
 --- 
 matrix: 
-  include: 
-    - 
-      language: groovy && java
-      script: "cd Tesiplugin && gradle build"
+  after_script: "cd Tesiplugin"
+  script: "./gradlew build"
 notifications: 
   email: 
     - j.inglese@studenti.unisannio.it
