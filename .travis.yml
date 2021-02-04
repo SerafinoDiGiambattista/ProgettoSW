@@ -5,6 +5,10 @@ os: linux
 dist: trusty
 jdk: oraclejdk8
 
+before_install:
+ 
+- chmod +x gradlew
+- ./gradlew clean
 before_script:
 - cd Tesiplugin
 script:
