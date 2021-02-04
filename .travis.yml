@@ -6,3 +6,14 @@ matrix:
     - language: groovy
         before_script: cd Tesiplugin
         script : gradle build
+notifications:
+ 
+  slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
+
+  email: 
+
+     recipients:
+    
+     - j.inglese@studenti.unisannio.it
+     on_success: always
+     on_failure: always
