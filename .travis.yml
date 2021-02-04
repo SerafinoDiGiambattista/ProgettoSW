@@ -17,3 +17,6 @@ script:
 notifications:  
 
 slack: progettosw:srkyouy3eGTXLVWk05P3Tmho   
+on_success: always
+    on_failure: always
+
