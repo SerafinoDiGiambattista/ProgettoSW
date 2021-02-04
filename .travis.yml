@@ -6,7 +6,7 @@ dist: trusty
 jdk: oraclejdk8
 
 before_install:
- - cd Tesiplugin
+- cd Tesiplugin
 - chmod +x gradlew
 - ./gradlew clean
  
