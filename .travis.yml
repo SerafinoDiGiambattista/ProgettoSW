@@ -1,12 +1,11 @@
-language: groovy
 language: java
+install: skip
 
-jdk: oraclejdk9
-  
-matrix: 
-  before_script: "cd Tesiplugin"
-  script: "gradle check"
-notifications: 
-  email: 
-    - j.inglese@studenti.unisannio.it
-  slack: "progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy"
+os: linux
+dist: trusty
+jdk: oraclejdk8
+
+before_script:
+- cd Tesiplugin
+script:
+- ./gradlew build --scan -s
