@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C#" filename="C:\Users\Serafino\Desktop\C#\PRJs_Recall\zanval_MiniLD62\Library\PackageCache\com.unity.collab-proxy@1.2.15\Editor\Collab\Presenters\CollabHistoryPresenter.cs"><using>using <name><name>System</name><operator>.</operator><name>Collections</name><operator>.</operator><name>Generic</name></name>;</using>
+<using>using <name><name>UnityEditor</name><operator>.</operator><name>Connect</name></name>;</using>
+<using>using <name><name>UnityEditor</name><operator>.</operator><name>Web</name></name>;</using>
+
+<namespace>namespace <name><name>UnityEditor</name><operator>.</operator><name>Collaboration</name></name>
+<block>{
+    <class><specifier>internal</specifier> class <name>CollabHistoryPresenter</name>
+    <block>{
+        <decl_stmt><decl><specifier>public</specifier> <type><specifier>const</specifier> <name>int</name></type> <name>ItemsPerPage</name> <init>= <expr><literal type="number">5</literal></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>ICollabHistoryWindow</name></type> <name>m_Window</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>ICollabHistoryItemFactory</name></type> <name>m_Factory</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>IRevisionsService</name></type> <name>m_Service</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>ConnectInfo</name></type> <name>m_ConnectState</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>CollabInfo</name></type> <name>m_CollabState</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>bool</name></type> <name>m_IsCollabError</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>int</name></type> <name>m_TotalRevisions</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>int</name></type> <name>m_CurrentPage</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>int</name></type> <name>m_RequestedPage</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>bool</name></type> <name>m_FetchInProgress</name></decl>;</decl_stmt>
+
+        <decl_stmt><decl><type><name>BuildAccess</name></type> <name>m_BuildAccess</name></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>string</name></type> <name>m_ProgressRevision</name></decl>;</decl_stmt>
+        <property><specifier>public</specifier> <type><name>bool</name></type> <name>BuildServiceEnabled</name> <block>{<function_decl><name>get</name>;</function_decl> <function_decl><name>set</name>;</function_decl> }</block></property>
+
+        <constructor><specifier>public</specifier> <name>CollabHistoryPresenter</name><parameter_list>(<parameter><decl><type><name>ICollabHistoryWindow</name></type> <name>window</name></decl></parameter>, <parameter><decl><type><name>ICollabHistoryItemFactory</name></type> <name>factory</name></decl></parameter>, <parameter><decl><type><name>IRevisionsService</name></type> <name>service</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_Window</name> <operator>=</operator> <name>window</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name>m_Factory</name> <operator>=</operator> <name>factory</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name>m_Service</name> <operator>=</operator> <name>service</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name>m_CurrentPage</name> <operator>=</operator> <literal type="number">0</literal></expr>;</expr_stmt>
+            <expr_stmt><expr><name>m_BuildAccess</name> <operator>=</operator> <operator>new</operator> <call><name>BuildAccess</name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>m_Service</name><operator>.</operator><name>FetchRevisionsCallback</name></name> <operator>+=</operator> <name>OnFetchRevisions</name></expr>;</expr_stmt>
+        }</block></constructor>
+
+        <function><specifier>public</specifier> <type><name>void</name></type> <name>OnWindowEnabled</name><parameter_list>()</parameter_list>
+        <block>{
+            <expr_stmt><expr><name><name>UnityConnect</name><operator>.</operator><name>instance</name><operator>.</operator><name>StateChanged</name></name> <operator>+=</operator> <name>OnConnectStateChanged</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>StateChanged</name></name> <operator>+=</operator> <name>OnCollabStateChanged</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>RevisionUpdated</name></name> <operator>+=</operator> <name>OnCollabRevisionUpdated</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>JobsCompleted</name></name> <operator>+=</operator> <name>OnCollabJobsCompleted</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>ErrorOccurred</name></name> <operator>+=</operator> <name>OnCollabError</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>ErrorCleared</name></name> <operator>+=</operator> <name>OnCollabErrorCleared</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>EditorApplication</name><operator>.</operator><name>playModeStateChanged</name></name> <operator>+=</operator> <name>OnPlayModeStateChanged</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name>m_ConnectState</name> <operator>=</operator> <call><name><name>UnityConnect</name><operator>.</operator><name>instance</name><operator>.</operator><name>GetConnectInfo</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><name>m_CollabState</name> <operator>=</operator> <call><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>GetCollabInfo</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+
+            <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>revisionActionsEnabled</name></name> <operator>=</operator> <operator>!</operator><name><name>EditorApplication</name><operator>.</operator><name>isPlayingOrWillChangePlaymode</name></name></expr>;</expr_stmt>
+
+            <comment type="line">// Setup window callbacks</comment>
+            <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>OnPageChangeAction</name></name> <operator>=</operator> <name>OnUpdatePage</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>OnUpdateAction</name></name> <operator>=</operator> <name>OnUpdate</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>OnRestoreAction</name></name> <operator>=</operator> <name>OnRestore</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>OnGoBackAction</name></name> <operator>=</operator> <name>OnGoBack</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>OnShowBuildAction</name></name> <operator>=</operator> <name>ShowBuildForCommit</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>OnShowServicesAction</name></name> <operator>=</operator> <name>ShowServicePage</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>itemsPerPage</name></name> <operator>=</operator> <name>ItemsPerPage</name></expr>;</expr_stmt>
+
+            <comment type="line">// Initialize data</comment>
+            <expr_stmt><expr><call><name>UpdateBuildServiceStatus</name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <decl_stmt><decl><type><name>var</name></type> <name>state</name> <init>= <expr><call><name>RecalculateState</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <comment type="line">// Only try to load the page if we're ready</comment>
+            <if>if <condition>(<expr><name>state</name> <operator>==</operator> <name><name>HistoryState</name><operator>.</operator><name>Ready</name></name></expr>)</condition><then>
+                <block type="pseudo"><expr_stmt><expr><call><name>OnUpdatePage</name><argument_list>(<argument><expr><name>m_CurrentPage</name></expr></argument>)</argument_list></call></expr>;</expr_stmt></block></then></if>
+            <expr_stmt><expr><call><name><name>m_Window</name><operator>.</operator><name>UpdateState</name></name><argument_list>(<argument><expr><name>state</name></expr></argument>, <argument><expr><literal type="boolean">true</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>public</specifier> <type><name>void</name></type> <name>OnWindowDisabled</name><parameter_list>()</parameter_list>
+        <block>{
+            <expr_stmt><expr><name><name>UnityConnect</name><operator>.</operator><name>instance</name><operator>.</operator><name>StateChanged</name></name> <operator>-=</operator> <name>OnConnectStateChanged</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>StateChanged</name></name> <operator>-=</operator> <name>OnCollabStateChanged</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>RevisionUpdated</name></name> <operator>-=</operator> <name>OnCollabRevisionUpdated</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>JobsCompleted</name></name> <operator>-=</operator> <name>OnCollabJobsCompleted</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>EditorApplication</name><operator>.</operator><name>playModeStateChanged</name></name> <operator>-=</operator> <name>OnPlayModeStateChanged</name></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnConnectStateChanged</name><parameter_list>(<parameter><decl><type><name>ConnectInfo</name></type> <name>state</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_ConnectState</name> <operator>=</operator> <name>state</name></expr>;</expr_stmt>
+
+            <expr_stmt><expr><call><name><name>m_Window</name><operator>.</operator><name>UpdateState</name></name><argument_list>(<argument><expr><call><name>RecalculateState</name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnCollabStateChanged</name><parameter_list>(<parameter><decl><type><name>CollabInfo</name></type> <name>state</name></decl></parameter>)</parameter_list>
+        <block>{
+            <comment type="line">// Sometimes a collab state change will trigger even though everything is the same</comment>
+            <if>if <condition>(<expr><call><name><name>m_CollabState</name><operator>.</operator><name>Equals</name></name><argument_list>(<argument><expr><name>state</name></expr></argument>)</argument_list></call></expr>)</condition><then>
+                <block type="pseudo"><return>return;</return></block></then></if>
+
+            <if>if <condition>(<expr><name><name>m_CollabState</name><operator>.</operator><name>tip</name></name> <operator>!=</operator> <name><name>state</name><operator>.</operator><name>tip</name></name></expr>)</condition><then>
+                <block type="pseudo"><expr_stmt><expr><call><name>OnUpdatePage</name><argument_list>(<argument><expr><name>m_CurrentPage</name></expr></argument>)</argument_list></call></expr>;</expr_stmt></block></then></if>
+
+            <expr_stmt><expr><name>m_CollabState</name> <operator>=</operator> <name>state</name></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>m_Window</name><operator>.</operator><name>UpdateState</name></name><argument_list>(<argument><expr><call><name>RecalculateState</name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <if>if <condition>(<expr><name><name>state</name><operator>.</operator><name>inProgress</name></name></expr>)</condition><then>
+            <block>{
+                <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>inProgressRevision</name></name> <operator>=</operator> <name>m_ProgressRevision</name></expr>;</expr_stmt>
+            }</block></then>
+            <else>else
+            <block>{
+                <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>inProgressRevision</name></name> <operator>=</operator> <literal type="null">null</literal></expr>;</expr_stmt>
+            }</block></else></if>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnCollabRevisionUpdated</name><parameter_list>(<parameter><decl><type><name>CollabInfo</name></type> <name>state</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><call><name>OnUpdatePage</name><argument_list>(<argument><expr><name>m_CurrentPage</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnCollabJobsCompleted</name><parameter_list>(<parameter><decl><type><name>CollabInfo</name></type> <name>state</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_ProgressRevision</name> <operator>=</operator> <literal type="null">null</literal></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnCollabError</name><parameter_list>()</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_IsCollabError</name> <operator>=</operator> <literal type="boolean">true</literal></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>m_Window</name><operator>.</operator><name>UpdateState</name></name><argument_list>(<argument><expr><call><name>RecalculateState</name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnCollabErrorCleared</name><parameter_list>()</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_IsCollabError</name> <operator>=</operator> <literal type="boolean">false</literal></expr>;</expr_stmt>
+            <expr_stmt><expr><name>m_FetchInProgress</name> <operator>=</operator> <literal type="boolean">true</literal></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>m_Service</name><operator>.</operator><name>GetRevisions</name></name><argument_list>(<argument><expr><name>m_CurrentPage</name> <operator>*</operator> <name>ItemsPerPage</name></expr></argument>, <argument><expr><name>ItemsPerPage</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>m_Window</name><operator>.</operator><name>UpdateState</name></name><argument_list>(<argument><expr><call><name>RecalculateState</name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnPlayModeStateChanged</name><parameter_list>(<parameter><decl><type><name>PlayModeStateChange</name></type> <name>stateChange</name></decl></parameter>)</parameter_list>
+        <block>{
+            <comment type="line">// If entering play mode, disable</comment>
+            <if>if <condition>(<expr><name>stateChange</name> <operator>==</operator> <name><name>PlayModeStateChange</name><operator>.</operator><name>ExitingEditMode</name></name> <operator>||</operator>
+                <name>stateChange</name> <operator>==</operator> <name><name>PlayModeStateChange</name><operator>.</operator><name>EnteredPlayMode</name></name></expr>)</condition><then>
+            <block>{
+                <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>revisionActionsEnabled</name></name> <operator>=</operator> <literal type="boolean">false</literal></expr>;</expr_stmt>
+            }</block></then>
+            <comment type="line">// If exiting play mode, enable!</comment>
+            <elseif>else <if>if <condition>(<expr><name>stateChange</name> <operator>==</operator> <name><name>PlayModeStateChange</name><operator>.</operator><name>EnteredEditMode</name></name> <operator>||</operator>
+                     <name>stateChange</name> <operator>==</operator> <name><name>PlayModeStateChange</name><operator>.</operator><name>ExitingPlayMode</name></name></expr>)</condition><then>
+            <block>{
+                <expr_stmt><expr><name><name>m_Window</name><operator>.</operator><name>revisionActionsEnabled</name></name> <operator>=</operator> <literal type="boolean">true</literal></expr>;</expr_stmt>
+            }</block></then></if></elseif></if>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>HistoryState</name></type> <name>RecalculateState</name><parameter_list>()</parameter_list>
+        <block>{
+            <if>if <condition>(<expr><operator>!</operator><name><name>m_ConnectState</name><operator>.</operator><name>online</name></name></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><name><name>HistoryState</name><operator>.</operator><name>Offline</name></name></expr>;</return></block></then></if>
+            <if>if <condition>(<expr><name><name>m_ConnectState</name><operator>.</operator><name>maintenance</name></name> <operator>||</operator> <name><name>m_CollabState</name><operator>.</operator><name>maintenance</name></name></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><name><name>HistoryState</name><operator>.</operator><name>Maintenance</name></name></expr>;</return></block></then></if>
+            <if>if <condition>(<expr><operator>!</operator><name><name>m_ConnectState</name><operator>.</operator><name>loggedIn</name></name></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><name><name>HistoryState</name><operator>.</operator><name>LoggedOut</name></name></expr>;</return></block></then></if>
+            <if>if <condition>(<expr><operator>!</operator><name><name>m_CollabState</name><operator>.</operator><name>seat</name></name></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><name><name>HistoryState</name><operator>.</operator><name>NoSeat</name></name></expr>;</return></block></then></if>
+            <if>if <condition>(<expr><operator>!</operator><call><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>IsCollabEnabledForCurrentProject</name></name><argument_list>()</argument_list></call></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><name><name>HistoryState</name><operator>.</operator><name>Disabled</name></name></expr>;</return></block></then></if>
+            <if>if <condition>(<expr><operator>!</operator><call><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>IsConnected</name></name><argument_list>()</argument_list></call> <operator>||</operator> <operator>!</operator><name><name>m_CollabState</name><operator>.</operator><name>ready</name></name> <operator>||</operator> <name>m_FetchInProgress</name></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><name><name>HistoryState</name><operator>.</operator><name>Waiting</name></name></expr>;</return></block></then></if>
+            <if>if <condition>(<expr><name><name>m_ConnectState</name><operator>.</operator><name>error</name></name> <operator>||</operator> <name>m_IsCollabError</name></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><name><name>HistoryState</name><operator>.</operator><name>Error</name></name></expr>;</return></block></then></if>
+
+            <return>return <expr><name><name>HistoryState</name><operator>.</operator><name>Ready</name></name></expr>;</return>
+        }</block></function>
+
+        <comment type="line">// TODO: Eventually this can be a listener on the build service status</comment>
+        <function><specifier>public</specifier> <type><name>void</name></type> <name>UpdateBuildServiceStatus</name><parameter_list>()</parameter_list>
+        <block>{
+            <foreach>foreach <control>(<init><decl><type><name>var</name></type> <name>service</name> <range>in <expr><call><name><name>UnityConnectServiceCollection</name><operator>.</operator><name>instance</name><operator>.</operator><name>GetAllServiceInfos</name></name><argument_list>()</argument_list></call></expr></range></decl></init>)</control>
+            <block>{
+                <if>if <condition>(<expr><call><name><name>service</name><operator>.</operator><name>name</name><operator>.</operator><name>Equals</name></name><argument_list>(<argument><expr><literal type="string">"Build"</literal></expr></argument>)</argument_list></call></expr>)</condition><then>
+                <block>{
+                    <expr_stmt><expr><name>BuildServiceEnabled</name> <operator>=</operator> <name><name>service</name><operator>.</operator><name>enabled</name></name></expr>;</expr_stmt>
+                }</block></then></if>
+            }</block></foreach>
+        }</block></function>
+
+        <function><specifier>public</specifier> <type><name>void</name></type> <name>ShowBuildForCommit</name><parameter_list>(<parameter><decl><type><name>string</name></type> <name>revisionID</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><call><name><name>m_BuildAccess</name><operator>.</operator><name>ShowBuildForCommit</name></name><argument_list>(<argument><expr><name>revisionID</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>public</specifier> <type><name>void</name></type> <name>ShowServicePage</name><parameter_list>()</parameter_list>
+        <block>{
+            <expr_stmt><expr><call><name><name>m_BuildAccess</name><operator>.</operator><name>ShowServicePage</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>public</specifier> <type><name>void</name></type> <name>OnUpdatePage</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>page</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_FetchInProgress</name> <operator>=</operator> <literal type="boolean">true</literal></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>m_Service</name><operator>.</operator><name>GetRevisions</name></name><argument_list>(<argument><expr><name>page</name> <operator>*</operator> <name>ItemsPerPage</name></expr></argument>, <argument><expr><name>ItemsPerPage</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>m_Window</name><operator>.</operator><name>UpdateState</name></name><argument_list>(<argument><expr><call><name>RecalculateState</name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><name>m_RequestedPage</name> <operator>=</operator> <name>page</name></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnFetchRevisions</name><parameter_list>(<parameter><decl><type><name>RevisionsResult</name></type> <name>data</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_FetchInProgress</name> <operator>=</operator> <literal type="boolean">false</literal></expr>;</expr_stmt>
+            <decl_stmt><decl><type><name><name>IEnumerable</name><argument_list type="generic">&lt;<argument><name>RevisionData</name></argument>&gt;</argument_list></name></type> <name>items</name> <init>= <expr><literal type="null">null</literal></expr></init></decl>;</decl_stmt>
+            <if>if <condition>(<expr><name>data</name> <operator>!=</operator> <literal type="null">null</literal></expr>)</condition><then>
+            <block>{
+                <expr_stmt><expr><name>m_CurrentPage</name> <operator>=</operator> <name>m_RequestedPage</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name>m_TotalRevisions</name> <operator>=</operator> <name><name>data</name><operator>.</operator><name>RevisionsInRepo</name></name></expr>;</expr_stmt>
+                <expr_stmt><expr><name>items</name> <operator>=</operator> <call><name><name>m_Factory</name><operator>.</operator><name>GenerateElements</name></name><argument_list>(<argument><expr><name><name>data</name><operator>.</operator><name>Revisions</name></name></expr></argument>, <argument><expr><name>m_TotalRevisions</name></expr></argument>, <argument><expr><name>m_CurrentPage</name> <operator>*</operator> <name>ItemsPerPage</name></expr></argument>, <argument><expr><name><name>m_Service</name><operator>.</operator><name>tipRevision</name></name></expr></argument>, <argument><expr><name><name>m_Window</name><operator>.</operator><name>inProgressRevision</name></name></expr></argument>, <argument><expr><name><name>m_Window</name><operator>.</operator><name>revisionActionsEnabled</name></name></expr></argument>, <argument><expr><name>BuildServiceEnabled</name></expr></argument>, <argument><expr><name><name>m_Service</name><operator>.</operator><name>currentUser</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+
+            <comment type="line">// State must be recalculated prior to inserting items</comment>
+            <expr_stmt><expr><call><name><name>m_Window</name><operator>.</operator><name>UpdateState</name></name><argument_list>(<argument><expr><call><name>RecalculateState</name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>m_Window</name><operator>.</operator><name>UpdateRevisions</name></name><argument_list>(<argument><expr><name>items</name></expr></argument>, <argument><expr><name><name>m_Service</name><operator>.</operator><name>tipRevision</name></name></expr></argument>, <argument><expr><name>m_TotalRevisions</name></expr></argument>, <argument><expr><name>m_CurrentPage</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnRestore</name><parameter_list>(<parameter><decl><type><name>string</name></type> <name>revisionId</name></decl></parameter>, <parameter><decl><type><name>bool</name></type> <name>updatetorevision</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_ProgressRevision</name> <operator>=</operator> <name>revisionId</name></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>ResyncToRevision</name></name><argument_list>(<argument><expr><name>revisionId</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnGoBack</name><parameter_list>(<parameter><decl><type><name>string</name></type> <name>revisionId</name></decl></parameter>, <parameter><decl><type><name>bool</name></type> <name>updatetorevision</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_ProgressRevision</name> <operator>=</operator> <name>revisionId</name></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>GoBackToRevision</name></name><argument_list>(<argument><expr><name>revisionId</name></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>OnUpdate</name><parameter_list>(<parameter><decl><type><name>string</name></type> <name>revisionId</name></decl></parameter>, <parameter><decl><type><name>bool</name></type> <name>updatetorevision</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>m_ProgressRevision</name> <operator>=</operator> <name>revisionId</name></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>Collab</name><operator>.</operator><name>instance</name><operator>.</operator><name>Update</name></name><argument_list>(<argument><expr><name>revisionId</name></expr></argument>, <argument><expr><name>updatetorevision</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+    }</block></class>
+}</block></namespace>
+</unit>
