@@ -2,7 +2,7 @@
 matrix: 
   include: 
     - 
-      language: groovy
+      language: groovy && java
       script: "cd Tesiplugin && gradle build"
 notifications: 
   email: 
