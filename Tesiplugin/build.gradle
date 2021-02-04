@@ -55,12 +55,12 @@ checkstyle {
 
 
 
-codenarc{
+//codenarc{
 
-    toolVersion= codeNarcVersion
-    config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
+  //  toolVersion= codeNarcVersion
+   // config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
 
-}
+//}
 
  
 checkstyleMain {
@@ -70,8 +70,8 @@ checkstyleTest {
     source ='src/test/java'
 }
 
-codenarcMain{
-    source = 'buildSrc/src/main/groovy'
-}
+//codenarcMain{
+  //  source = 'buildSrc/src/main/groovy'
+//}
  
 
