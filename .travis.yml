@@ -1,5 +1,5 @@
-matrix:
-  include:
+job:
+ 
     - language: java
         script: cd Tesiplugin
         before_script: gradle build
