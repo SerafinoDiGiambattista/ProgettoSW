@@ -1,11 +1,11 @@
-job:
- 
-    - language: java
-        script: cd Tesiplugin
-        before_script: gradle build
+matrix:
+include:
     - language: groovy
-        script: cd Tesiplugin
-        before_script: gradle build
+        script: cd Tesiplugin && gradle build
+   
+    - language: java
+        script: cd Tesiplugin && gradle build
+  
 
 notifications:
 
@@ -13,8 +13,11 @@ notifications:
       
     email: 
     
-    recipients:
         - j.inglese@studenti.unisannio.it 
      
           on_success: always 
           on_failure: never
+          
+cache:
+       directories: ~/.gradle/caches/
+                    ~/.gradle/wrapper/
