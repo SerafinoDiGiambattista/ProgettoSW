@@ -1,7 +1,6 @@
 language: groovy
 
-jdk:
-  - oraclejdk8
+jdk: oraclejdk9
   
 matrix: 
   before_script: "cd Tesiplugin"
