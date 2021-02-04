@@ -178,24 +178,24 @@ public class Matrice {
 		//Visualizza(tabella, tabella2);
 	}
 
-	public void lettura(String fileo, Scanner scan){
+	public void lettura(String fileo, Scanner scan) {
 
 		JTable table;
 		JTable table2;
-		JFrame frame1 = new JFrame(); 
-		JFrame frame2 = new JFrame(); 
-		String file =  fileo.concat("Risultati.txt");
+		JFrame frame1 = new JFrame();
+		JFrame frame2 = new JFrame();
+		String file = fileo.concat("Risultati.txt");
 		String file2 = fileo.concat("RisultatiNOC.txt");
-		File filev= new File(file);
+		File filev = new File(file);
 
-		while(!filev.isFile()){
+		while (!filev.isFile()) {
 
-			while(scan.hasNextLine()){
+			while (scan.hasNextLine()) {
 
 				System.out.println("\nInserisci nome file valido");
-				String cos=scan.next();
-				file= cos.concat("Risultati.txt");
-				file2=cos.concat("RisultatiNOC.txt");
+				String cos = scan.next();
+				file = cos.concat("Risultati.txt");
+				file2 = cos.concat("RisultatiNOC.txt");
 			}
 			filev = new File(file);
 		}
@@ -204,27 +204,30 @@ public class Matrice {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 			table = (JTable) ois.readObject();
 			ois.close();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("Problem reading back table from file: " + file);
 			return;
 		}
 
 		frame1.add(new JScrollPane(table));
-		frame1.setSize(300,400);    
+		frame1.setSize(300, 400);
 		frame1.setVisible(true);
 
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file2));
 			table2 = (JTable) ois.readObject();
 			ois.close();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("Problem reading back table from file: " + file2);
 			return;
 		}
 		frame2.add(new JScrollPane(table2));
-		frame2.setSize(300,400);    
+		frame2.setSize(300, 400);
 		frame2.setVisible(true);
+		System.out.print("Inserisici chiudi per chiudere le tabelle");
+		if (scan.nextLine().equals("chiudi")){
+			frame1.dispose();
+		frame2.dispose();
+	}
 	}
 }
