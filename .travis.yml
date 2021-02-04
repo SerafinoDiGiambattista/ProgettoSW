@@ -1,0 +1,21 @@
+language: java
+install: skip
+
+os: linux
+dist: trusty
+jdk: oraclejdk8
+
+before_install:
+- cd Tesiplugin
+- chmod +x gradlew
+- ./gradlew clean
+ 
+script:
+- ./gradlew build  
+
+
+notifications:
+  slack: progettosw:Rx1NBVfPkgXKb2NGaSAjbKdR
+  
+  on_success: always
+  on_failure: always
