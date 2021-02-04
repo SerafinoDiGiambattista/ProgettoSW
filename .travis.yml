@@ -14,8 +14,8 @@ script:
 - ./gradlew build  
 
 
-notifications:  
-
-slack: progettosw:srkyouy3eGTXLVWk05P3Tmho   
-on_success: always
-on_failure: always
+notifications:
+  slack: progettosw:1rOw47ik62k9gOvOg1rAGnkn
+  
+  on_success: always
+  on_failure: always
