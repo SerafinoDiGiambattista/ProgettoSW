@@ -1,23 +1,10 @@
-matrix:
-include:
-    - language: groovy
-        script: cd Tesiplugin && gradle build
-   
-    - language: java
-        script: cd Tesiplugin && gradle build
-  
-
-notifications:
-
-    slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
-      
-    email: 
-    
-        - j.inglese@studenti.unisannio.it 
-     
-          on_success: always 
-          on_failure: never
-          
-cache:
-       directories: ~/.gradle/caches/
-                    ~/.gradle/wrapper/
+--- 
+matrix: 
+  include: 
+    - 
+      language: groovy
+      script: "cd Tesiplugin && gradle build"
+notifications: 
+  email: 
+    - j.inglese@studenti.unisannio.it
+  slack: "progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy"
