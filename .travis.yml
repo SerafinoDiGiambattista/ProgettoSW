@@ -2,10 +2,7 @@ matrix:
   include:
     - language: java
         before_script: cd Tesiplugin
-        script : gradle check
-    - language: groovy
-        before_script: cd Tesiplugin
-        script : gradle build
+     
 notifications:
  
   slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
@@ -14,6 +11,7 @@ notifications:
 
      recipients:
     
-     - j.inglese@studenti.unisannio.it
+     - j.inglese@studenti.unisannio.it 
+     
      on_success: always
      on_failure: always
