@@ -1,22 +1,21 @@
-language:
-- java
-- groovy
+matrix:
+  include:
+    - language: java
+         script: cd Tesiplugin
+           before_script: compile build
+    - language: groovy
+         script: cd Tesiplugin
+           before_script: compile build
+      
+      notifications:
+      
+      slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
+      
+      email: 
 
-
-jobs:
- include:
-  - stage: compile
-    script: cd Tesiplugin && gradle build
- 
-
-notifications:
- 
-  slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
-
-  email: 
-
-     recipients:
+            recipients:
     
-     - j.inglese@studenti.unisannio.it
-     on_success: always
-     on_failure: always
+            - j.inglese@studenti.unisannio.it 
+     
+            on_success: always
+            on_failure: always
