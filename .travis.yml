@@ -7,7 +7,6 @@ matrix:
          script : cd Tesiplugin
            before_script: compile build
       
-      
       notifications:
       
       slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
