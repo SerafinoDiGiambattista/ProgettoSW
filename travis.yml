@@ -1,0 +1,11 @@
+language: groovy
+
+jdk: oraclejdk9
+  
+matrix: 
+  before_script: "cd Tesiplugin"
+  script: "gradle check"
+notifications: 
+  email: 
+    - j.inglese@studenti.unisannio.it
+  slack: "progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy"
