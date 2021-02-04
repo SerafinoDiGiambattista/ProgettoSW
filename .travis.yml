@@ -1,7 +1,11 @@
---- 
+language: groovy
+
+jdk:
+  - oraclejdk8
+  
 matrix: 
-  after_script: "cd Tesiplugin"
-  script: "./gradlew build"
+  before_script: "cd Tesiplugin"
+  script: "gradle check"
 notifications: 
   email: 
     - j.inglese@studenti.unisannio.it
