@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C#" filename="C:\Users\Serafino\ProgettoSW\Tesiplugin\C#\Person\Person.cs"><using>using <name>System</name>;</using>
+
+<class><specifier>public</specifier> class <name>Person</name>
+<block>{
+    <comment type="line">// Constructor that takes no arguments:</comment>
+    <constructor><specifier>public</specifier> <name>Person</name><parameter_list>()</parameter_list>
+    <block>{
+        <expr_stmt><expr><name>Name</name> <operator>=</operator> <literal type="string">"unknown"</literal></expr>;</expr_stmt>
+    }</block></constructor>
+
+    <comment type="line">// Constructor that takes one argument:</comment>
+    <constructor><specifier>public</specifier> <name>Person</name><parameter_list>(<parameter><decl><type><name>string</name></type> <name>name</name></decl></parameter>)</parameter_list>
+    <block>{
+        <expr_stmt><expr><name>Name</name> <operator>=</operator> <name>name</name></expr>;</expr_stmt>
+    }</block></constructor>
+	<comment type="block">/*
+	gdfgdf
+	*/</comment>
+
+    <comment type="line">// Auto-implemented readonly property:</comment>
+    <property><specifier>public</specifier> <type><name>string</name></type> <name>Name</name> <block>{ <function_decl><name>get</name>;</function_decl> }</block></property>
+
+    <comment type="line">// Method that overrides the base class (System.Object) implementation.</comment>
+    <function><specifier>public</specifier> <specifier>override</specifier> <type><name>string</name></type> <name>ToString</name><parameter_list>()</parameter_list>
+    <block>{
+        <return>return <expr><name>Name</name></expr>;</return>
+    }</block></function>
+}</block></class>
+<class>class <name>TestPerson</name>
+<block>{
+    <function><specifier>static</specifier> <type><name>void</name></type> <name>Main</name><parameter_list>()</parameter_list>
+    <block>{
+        <comment type="line">// Call the constructor that has no parameters.</comment>
+        <decl_stmt><decl><type><name>var</name></type> <name>person1</name> <init>= <expr><operator>new</operator> <call><name>Person</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>Console</name><operator>.</operator><name>WriteLine</name></name><argument_list>(<argument><expr><name><name>person1</name><operator>.</operator><name>Name</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <comment type="line">// Call the constructor that has one parameter.</comment>
+        <decl_stmt><decl><type><name>var</name></type> <name>person2</name> <init>= <expr><operator>new</operator> <call><name>Person</name><argument_list>(<argument><expr><literal type="string">"Sarah Jones"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>Console</name><operator>.</operator><name>WriteLine</name></name><argument_list>(<argument><expr><name><name>person2</name><operator>.</operator><name>Name</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <comment type="line">// Get the string representation of the person2 instance.</comment>
+        <expr_stmt><expr><call><name><name>Console</name><operator>.</operator><name>WriteLine</name></name><argument_list>(<argument><expr><name>person2</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <expr_stmt><expr><call><name><name>Console</name><operator>.</operator><name>WriteLine</name></name><argument_list>(<argument><expr><literal type="string">"Press any key to exit."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>Console</name><operator>.</operator><name>ReadKey</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+}</block></class>
+<comment type="line">// Output:</comment>
+<comment type="line">// unknown</comment>
+<comment type="line">// Sarah Jones</comment>
+<comment type="line">// Sarah Jones</comment></unit>
