@@ -11,7 +11,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MatriceTest {
+    
+@BeforeEach
+void setUp() throws Exception{
+        System.setProperty("java.awt.headless", "false");
 
+        }
+    
     private ArrayList<Document> ndoc = new ListDocument().getNdoc();
 
     @Test
