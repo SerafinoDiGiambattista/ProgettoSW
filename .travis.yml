@@ -1,8 +1,8 @@
 language: java
 
 os: linux
-dist: xenial
-jdk: openjdk11 
+dist: trusty
+jdk: oraclejdk8 
 env:
    - _JAVA_OPTIONS="--add-opens=java.base/java.util=ALL-UNNAMED -Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw"        
    
