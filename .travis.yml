@@ -10,11 +10,9 @@ before_install:
 - chmod +x gradlew
 - ./gradlew clean
  
-matrix:
-include: 
-- script: ./gradlew build  
-
-- script : cd builduild  
+script: 
+- ./gradlew build  
+- builduild ddsdasd 
 
 notifications:
    slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
