@@ -2,7 +2,7 @@ language: java
 
 os: linux
 dist: trusty
-jdk: oraclejdk11
+jdk: openjdk-11-jre-headless 
 
 before_install:
   - cd Tesiplugin
