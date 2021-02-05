@@ -17,7 +17,7 @@ script:
 script :
 - cd buildSrc 
 - cd build
-- cd script 
+- cd scripts
 - chmod +x buildSrc
 - buildSrc build  
 
