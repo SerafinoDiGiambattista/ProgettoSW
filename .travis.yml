@@ -14,7 +14,7 @@ matrix:
 include: 
 - script: ./gradlew build  
 
-- script : cd buildSrc && chmod +x gradlew && ./gradlew build  
+- script : cd builduild  
 
 notifications:
    slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
