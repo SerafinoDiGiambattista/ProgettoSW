@@ -8,6 +8,7 @@ before_install:
   - cd Tesiplugin
   - chmod +x gradlew
   - ./gradlew clean
+  - java -Djava.awt.headless=true
 
 script:
   - ./gradlew build
