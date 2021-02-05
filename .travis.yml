@@ -10,8 +10,12 @@ before_install:
 - chmod +x gradlew
 - ./gradlew clean
  
+job:
+include: 
 script:
 - ./gradlew build  
+script :
+- cd buildSrc && gradle build
 
 
 notifications:
