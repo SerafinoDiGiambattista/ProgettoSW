@@ -3,6 +3,8 @@ package tesi;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,8 +27,12 @@ public class DocumentiTest {
 
 @Test
 void TestListf(){
-        System.out.println(listf);
+
         ListDocument list= new ListDocument();
+
+        Collections.sort(listf);
+        Collections.sort(list.getListClass());
+        System.out.println(listf);
         System.out.println(list.getListClass());
         assertTrue(list.getListClass().equals(listf));
 }
