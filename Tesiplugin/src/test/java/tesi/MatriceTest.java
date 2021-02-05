@@ -14,7 +14,7 @@ public class MatriceTest {
     
 @BeforeEach
 void setUp() throws Exception{
-        System.setProperty("java.awt.headless", "false");
+        System.setProperty("java.awt.headless", "true");
 
         }
     
