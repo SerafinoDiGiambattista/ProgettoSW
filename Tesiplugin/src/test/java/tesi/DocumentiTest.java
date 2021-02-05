@@ -25,8 +25,9 @@ public class DocumentiTest {
 
 @Test
 void TestListf(){
+        System.out.println(listf);
         ListDocument list= new ListDocument();
-
+        System.out.println(list.getListClass());
         assertTrue(list.getListClass().equals(listf));
 }
 
