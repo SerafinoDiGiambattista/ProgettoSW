@@ -75,11 +75,12 @@ public class ListDocument {
 
 public ArrayList<String> getListClass(){
     ArrayList<String> files= new ArrayList<String>();
-    files.add("C#/ClasseA.xml");
-    files.add("C#/ClasseB.xml");
-    files.add("C#/ClasseC.xml");
-    File file = new File("C#/Person/Person.xml");
+    File file = new File("C#/Person\\Person.xml");
     files.add(file.getAbsolutePath());
+    files.add("C#\\ClasseB.xml");
+    files.add("C#\\ClasseA.xml");
+    files.add("C#\\ClasseC.xml");
+    
     return files;
     }
 
