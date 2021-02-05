@@ -12,14 +12,14 @@ before_install:
  
 jobs:
 include: 
-- stage : build of src
-script: ./gradlew build  
+- stage : build of src 
+  script: ./gradlew build  
 
 - stage : build of buildSrc
-script :
-- cd buildSrc
-- chmod +x gradlew
-- ./gradlew build  
+  script :
+           - cd buildSrc
+           - chmod +x gradlew 
+           - ./gradlew build  
 
 notifications:
    slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
