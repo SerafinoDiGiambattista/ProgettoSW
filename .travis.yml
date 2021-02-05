@@ -10,7 +10,7 @@ before_install:
 - chmod +x gradlew
 - ./gradlew clean
  
-job:
+jobs:
 include: 
 - stage : build of src
 script:
