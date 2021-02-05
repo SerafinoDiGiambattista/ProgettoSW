@@ -15,9 +15,7 @@ include:
 script:
 - ./gradlew build  
 script :
-- cd buildSrc 
-- chmod +x gradlew
-- gradle build  
+- cd buildSrc && gradle build  
 
 notifications:
    slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
