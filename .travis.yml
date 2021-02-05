@@ -4,8 +4,6 @@ install: skip
 os: linux
 dist: trusty
 jdk:
-  - oraclejdk7
-  - openjdk7
   - openjdk8 
  
 before_install:
