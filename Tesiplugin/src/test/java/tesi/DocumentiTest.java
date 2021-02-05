@@ -32,8 +32,6 @@ void TestListf(){
 
         Collections.sort(listf);
         Collections.sort(list.getListClass());
-        System.out.println(listf);
-        System.out.println(list.getListClass());
         assertTrue(list.getListClass().equals(listf));
 }
 
