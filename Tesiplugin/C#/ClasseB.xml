@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C#" filename="C:\Users\Serafino\ProgettoSW\Tesiplugin\C#\ClasseB.cs"><class><specifier>public</specifier> class <name>B</name> <super>: <name>A</name></super>
+<block>{
+    <function><specifier>public</specifier> <specifier>override</specifier> <type><name>void</name></type> <name>Method1</name><parameter_list>()</parameter_list> <comment type="line">// Generates CS0506.</comment>
+    <block>{
+        <comment type="line">// Do something else.</comment>
+    }</block></function>
+}</block></class></unit>

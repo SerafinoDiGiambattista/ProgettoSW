@@ -8,11 +8,13 @@ plugins {
     id 'groovy'
     id 'checkstyle'
     id 'codenarc'
+    id 'jacoco'
 }
 ext {
     checkstyleVersion = '7.2'
     codeNarcVersion= '2.0.0'
 }
+
 
 repositories {
     // Use JCenter for resolving dependencies.
@@ -20,7 +22,7 @@ repositories {
 }
 
 dependencies {
-   
+
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 
@@ -56,13 +58,13 @@ checkstyle {
 
 
 //codenarc{
-
-  //  toolVersion= codeNarcVersion
-   // config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
+//
+//  toolVersion= codeNarcVersion
+// config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
 
 //}
 
- 
+
 checkstyleMain {
     source ='src/main/java'
 }
@@ -71,7 +73,27 @@ checkstyleTest {
 }
 
 //codenarcMain{
-  //  source = 'buildSrc/src/main/groovy'
+//  source = 'buildSrc/src/main/groovy'
 //}
- 
 
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+apply plugin : 'jacoco'
+jacoco {
+    toolVersion = "0.8.6"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}

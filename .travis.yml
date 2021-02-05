@@ -6,16 +6,16 @@ dist: trusty
 jdk: oraclejdk8
 
 before_install:
-- cd Tesiplugin
-- chmod +x gradlew
-- ./gradlew clean
- 
-script:
-- ./gradlew build  
+  - cd Tesiplugin
+  - chmod +x gradlew
+  - ./gradlew clean
 
+script:
+  - ./gradlew build
+  - cd cd buildSrc && chmod +x gradlew && ./gradlew build
 
 notifications:
-  slack: progettosw:1rOw47ik62k9gOvOg1rAGnkn
-  
+  slack: progettosw:Rx1NBVfPkgXKb2NGaSAjbKdR
+
   on_success: always
   on_failure: always
