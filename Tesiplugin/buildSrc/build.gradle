@@ -1,31 +1,39 @@
-import javax.swing.JFileChooser
+
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
+
     id 'java'
     id 'java-gradle-plugin'
-    id 'groovy' 
+    id 'groovy'
     id 'jacoco'
 
 }
 
- buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0'
-    }
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+dependencies {
+    // Use JUnit Jupiter API for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:29.0-jre'
+
+    compile localGroovy()
+    compile gradleApi()
 }
 
-apply plugin: 'java-library'
-apply plugin: 'org.junit.platform.gradle.plugin'
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
-apply plugin : 'groovy'
+
+ 
+
 apply plugin : 'jacoco'
 jacoco {
     toolVersion = "0.8.6"
@@ -49,25 +57,6 @@ jacocoTestReport{
         xml.enabled false
         csv.enabled false
         html.enabled true
-        html.destination file("${buildDir}/jacocoHtml")
+        html.destination file("jacocoHtml")
     }
 }
-
-repositories {
-    // Use JCenter for resolving dependencies.
-    jcenter()
-}
-
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    testCompileOnly 'junit:junit:4.13'
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
-}
-
- 
-run{
-    standardInput = System.in
-}
- 
- 
