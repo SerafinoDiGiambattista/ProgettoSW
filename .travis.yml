@@ -12,7 +12,7 @@ before_install:
 
 script:
   - ./gradlew build
-  - cd cd buildSrc && chmod +x gradlew && ./gradlew build
+  
 
 notifications:
   slack: progettosw:Rx1NBVfPkgXKb2NGaSAjbKdR
