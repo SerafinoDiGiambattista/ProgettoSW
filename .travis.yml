@@ -5,6 +5,7 @@ dist: trusty
 jdk: oraclejdk11
 
 before_install:
+  - java-11-openjdk-headless
   - cd Tesiplugin
   - chmod +x gradlew
   - ./gradlew clean
