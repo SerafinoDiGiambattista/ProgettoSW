@@ -3,19 +3,22 @@ install: skip
 
 os: linux
 dist: trusty
-jdk: oraclejdk8
-
+jdk:
+  - openjdk8 
+ 
 before_install:
-- cd Tesiplugin
-- chmod +x gradlew
-- ./gradlew clean
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - cd Tesiplugin
+  - chmod +x gradlew
+  - ./gradlew clean
  
 script:
-- ./gradlew build  
-
+  - ./gradlew build
+  
 
 notifications:
-  slack: progettosw:1rOw47ik62k9gOvOg1rAGnkn
-  
+  slack: progettosw:Rx1NBVfPkgXKb2NGaSAjbKdR
+
   on_success: always
   on_failure: always

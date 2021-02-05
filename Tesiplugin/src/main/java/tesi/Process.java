@@ -100,13 +100,7 @@ public class Process {
 			ce.creazione();
 			ce.lettura(sistema,scan);
 
-			System.out.println("\nInserisci il comando termina per fermare il programma :");
-			String term = scan.nextLine();
-			scan.close();
 
-			if(term.equals("termina")) {
-				System.exit(0);
-			}
 		}
 
 		if(comando.equals("leggo")){
@@ -116,10 +110,7 @@ public class Process {
 			Matrice ma = new Matrice();
 			ma.lettura(tab,scan);
 
-			System.out.println("\nInserisci termina per stoppare il programma : ");
-			String term = scan.next();
 
-			if(term.equals("termina")) System.exit(0);
 			scan.close();
 		}
 		scan.close();

@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C#" filename="C:\Users\Serafino\Desktop\C#\PRJs_Recall\zanval_MiniLD62\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\MaterialReferenceManager.cs"><using>using <name>UnityEngine</name>;</using>
+<using>using <name><name>System</name><operator>.</operator><name>Collections</name></name>;</using>
+<using>using <name><name>System</name><operator>.</operator><name>Collections</name><operator>.</operator><name>Generic</name></name>;</using>
+
+
+<namespace>namespace <name>TMPro</name>
+<block>{
+
+    <class><specifier>public</specifier> class <name>MaterialReferenceManager</name>
+    <block>{
+        <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><name>MaterialReferenceManager</name></type> <name>s_Instance</name></decl>;</decl_stmt>
+
+        <comment type="line">// Dictionaries used to track Asset references.</comment>
+        <decl_stmt><decl><specifier>private</specifier> <type><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>Material</name></argument>&gt;</argument_list></name></type> <name>m_FontMaterialReferenceLookup</name> <init>= <expr><operator>new</operator> <call><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>Material</name></argument>&gt;</argument_list></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>private</specifier> <type><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>TMP_FontAsset</name></argument>&gt;</argument_list></name></type> <name>m_FontAssetReferenceLookup</name> <init>= <expr><operator>new</operator> <call><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>TMP_FontAsset</name></argument>&gt;</argument_list></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>private</specifier> <type><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>TMP_SpriteAsset</name></argument>&gt;</argument_list></name></type> <name>m_SpriteAssetReferenceLookup</name> <init>= <expr><operator>new</operator> <call><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>TMP_SpriteAsset</name></argument>&gt;</argument_list></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>private</specifier> <type><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>TMP_ColorGradient</name></argument>&gt;</argument_list></name></type> <name>m_ColorGradientReferenceLookup</name> <init>= <expr><operator>new</operator> <call><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>TMP_ColorGradient</name></argument>&gt;</argument_list></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Get a singleton instance of the registry</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <property><specifier>public</specifier> <specifier>static</specifier> <type><name>MaterialReferenceManager</name></type> <name>instance</name>
+        <block>{
+            <function><name>get</name>
+            <block>{
+                <if>if <condition>(<expr><name><name>MaterialReferenceManager</name><operator>.</operator><name>s_Instance</name></name> <operator>==</operator> <literal type="null">null</literal></expr>)</condition><then>
+                    <block type="pseudo"><expr_stmt><expr><name><name>MaterialReferenceManager</name><operator>.</operator><name>s_Instance</name></name> <operator>=</operator> <operator>new</operator> <call><name>MaterialReferenceManager</name><argument_list>()</argument_list></call></expr>;</expr_stmt></block></then></if>
+                <return>return <expr><name><name>MaterialReferenceManager</name><operator>.</operator><name>s_Instance</name></name></expr>;</return>
+            }</block></function>
+        }</block></property>
+
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Add new font asset reference to dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>AddFontAsset</name><parameter_list>(<parameter><decl><type><name>TMP_FontAsset</name></type> <name>fontAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>AddFontAssetInternal</name></name><argument_list>(<argument><expr><name>fontAsset</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">///  Add new Font Asset reference to dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>AddFontAssetInternal</name><parameter_list>(<parameter><decl><type><name>TMP_FontAsset</name></type> <name>fontAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <if>if <condition>(<expr><call><name><name>m_FontAssetReferenceLookup</name><operator>.</operator><name>ContainsKey</name></name><argument_list>(<argument><expr><name><name>fontAsset</name><operator>.</operator><name>hashCode</name></name></expr></argument>)</argument_list></call></expr>)</condition><then> <block type="pseudo"><return>return;</return></block></then></if>
+
+            <comment type="line">// Add reference to the font asset.</comment>
+            <expr_stmt><expr><call><name><name>m_FontAssetReferenceLookup</name><operator>.</operator><name>Add</name></name><argument_list>(<argument><expr><name><name>fontAsset</name><operator>.</operator><name>hashCode</name></name></expr></argument>, <argument><expr><name>fontAsset</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+            <comment type="line">// Add reference to the font material.</comment>
+            <expr_stmt><expr><call><name><name>m_FontMaterialReferenceLookup</name><operator>.</operator><name>Add</name></name><argument_list>(<argument><expr><name><name>fontAsset</name><operator>.</operator><name>materialHashCode</name></name></expr></argument>, <argument><expr><name><name>fontAsset</name><operator>.</operator><name>material</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Add new Sprite Asset to dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>AddSpriteAsset</name><parameter_list>(<parameter><decl><type><name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>AddSpriteAssetInternal</name></name><argument_list>(<argument><expr><name>spriteAsset</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Internal method to add a new sprite asset to the dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>AddSpriteAssetInternal</name><parameter_list>(<parameter><decl><type><name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <if>if <condition>(<expr><call><name><name>m_SpriteAssetReferenceLookup</name><operator>.</operator><name>ContainsKey</name></name><argument_list>(<argument><expr><name><name>spriteAsset</name><operator>.</operator><name>hashCode</name></name></expr></argument>)</argument_list></call></expr>)</condition><then> <block type="pseudo"><return>return;</return></block></then></if>
+
+            <comment type="line">// Add reference to sprite asset.</comment>
+            <expr_stmt><expr><call><name><name>m_SpriteAssetReferenceLookup</name><operator>.</operator><name>Add</name></name><argument_list>(<argument><expr><name><name>spriteAsset</name><operator>.</operator><name>hashCode</name></name></expr></argument>, <argument><expr><name>spriteAsset</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+            <comment type="line">// Adding reference to the sprite asset material as well</comment>
+            <expr_stmt><expr><call><name><name>m_FontMaterialReferenceLookup</name><operator>.</operator><name>Add</name></name><argument_list>(<argument><expr><name><name>spriteAsset</name><operator>.</operator><name>hashCode</name></name></expr></argument>, <argument><expr><name><name>spriteAsset</name><operator>.</operator><name>material</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Add new Sprite Asset to dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>AddSpriteAsset</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>AddSpriteAssetInternal</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><expr><name>spriteAsset</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Internal method to add a new sprite asset to the dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>AddSpriteAssetInternal</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <if>if <condition>(<expr><call><name><name>m_SpriteAssetReferenceLookup</name><operator>.</operator><name>ContainsKey</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>)</argument_list></call></expr>)</condition><then> <block type="pseudo"><return>return;</return></block></then></if>
+
+            <comment type="line">// Add reference to Sprite Asset.</comment>
+            <expr_stmt><expr><call><name><name>m_SpriteAssetReferenceLookup</name><operator>.</operator><name>Add</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><expr><name>spriteAsset</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+            <comment type="line">// Add reference to Sprite Asset using the asset hashcode.</comment>
+            <expr_stmt><expr><call><name><name>m_FontMaterialReferenceLookup</name><operator>.</operator><name>Add</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><expr><name><name>spriteAsset</name><operator>.</operator><name>material</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+            <comment type="line">// Compatibility check</comment>
+            <if>if <condition>(<expr><name><name>spriteAsset</name><operator>.</operator><name>hashCode</name></name> <operator>==</operator> <literal type="number">0</literal></expr>)</condition><then> <block type="pseudo"><expr_stmt><expr><name><name>spriteAsset</name><operator>.</operator><name>hashCode</name></name> <operator>=</operator> <name>hashCode</name></expr>;</expr_stmt></block></then></if>
+        }</block></function>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Add new Material reference to dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>AddFontMaterial</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><name>Material</name></type> <name>material</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>AddFontMaterialInternal</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><expr><name>material</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Add new material reference to dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>AddFontMaterialInternal</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><name>Material</name></type> <name>material</name></decl></parameter>)</parameter_list>
+        <block>{
+            <comment type="line">// Since this function is called after checking if the material is</comment>
+            <comment type="line">// contained in the dictionary, there is no need to check again.</comment>
+            <expr_stmt><expr><call><name><name>m_FontMaterialReferenceLookup</name><operator>.</operator><name>Add</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><expr><name>material</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Add new Color Gradient Preset to dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>AddColorGradientPreset</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><name>TMP_ColorGradient</name></type> <name>spriteAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>AddColorGradientPreset_Internal</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><expr><name>spriteAsset</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Internal method to add a new Color Gradient Preset to the dictionary.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <function><specifier>private</specifier> <type><name>void</name></type> <name>AddColorGradientPreset_Internal</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><name>TMP_ColorGradient</name></type> <name>spriteAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <if>if <condition>(<expr><call><name><name>m_ColorGradientReferenceLookup</name><operator>.</operator><name>ContainsKey</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>)</argument_list></call></expr>)</condition><then> <block type="pseudo"><return>return;</return></block></then></if>
+
+            <comment type="line">// Add reference to Color Gradient Preset Asset.</comment>
+            <expr_stmt><expr><call><name><name>m_ColorGradientReferenceLookup</name><operator>.</operator><name>Add</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><expr><name>spriteAsset</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></function>
+
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Add new material reference and return the index of this new reference in the materialReferences array.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="materialHashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">//public int AddMaterial(Material material, int materialHashCode, TMP_FontAsset fontAsset)</comment>
+        <comment type="line">//{</comment>
+        <comment type="line">//    if (!m_MaterialReferenceLookup.ContainsKey(materialHashCode))</comment>
+        <comment type="line">//    {</comment>
+        <comment type="line">//        int index = m_MaterialReferenceLookup.Count;</comment>
+
+        <comment type="line">//        materialReferences[index].fontAsset = fontAsset;</comment>
+        <comment type="line">//        materialReferences[index].material = material;</comment>
+        <comment type="line">//        materialReferences[index].isDefaultMaterial = material.GetInstanceID() == fontAsset.material.GetInstanceID() ? true : false;</comment>
+        <comment type="line">//        materialReferences[index].index = index;</comment>
+        <comment type="line">//        materialReferences[index].referenceCount = 0;</comment>
+
+        <comment type="line">//        m_MaterialReferenceLookup[materialHashCode] = index;</comment>
+
+        <comment type="line">//        // Compute Padding value and store it</comment>
+        <comment type="line">//        // TODO</comment>
+
+        <comment type="line">//        int fontAssetHashCode = fontAsset.hashCode;</comment>
+
+        <comment type="line">//        if (!m_FontAssetReferenceLookup.ContainsKey(fontAssetHashCode))</comment>
+        <comment type="line">//            m_FontAssetReferenceLookup.Add(fontAssetHashCode, fontAsset);</comment>
+
+        <comment type="line">//        m_countInternal += 1;</comment>
+
+        <comment type="line">//        return index;</comment>
+        <comment type="line">//    }</comment>
+        <comment type="line">//    else</comment>
+        <comment type="line">//    {</comment>
+        <comment type="line">//        return m_MaterialReferenceLookup[materialHashCode];</comment>
+        <comment type="line">//    }</comment>
+        <comment type="line">//}</comment>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Add new material reference and return the index of this new reference in the materialReferences array.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="materialHashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <comment type="line">//public int AddMaterial(Material material, int materialHashCode, TMP_SpriteAsset spriteAsset)</comment>
+        <comment type="line">//{</comment>
+        <comment type="line">//    if (!m_MaterialReferenceLookup.ContainsKey(materialHashCode))</comment>
+        <comment type="line">//    {</comment>
+        <comment type="line">//        int index = m_MaterialReferenceLookup.Count;</comment>
+
+        <comment type="line">//        materialReferences[index].fontAsset = materialReferences[0].fontAsset;</comment>
+        <comment type="line">//        materialReferences[index].spriteAsset = spriteAsset;</comment>
+        <comment type="line">//        materialReferences[index].material = material;</comment>
+        <comment type="line">//        materialReferences[index].isDefaultMaterial = true;</comment>
+        <comment type="line">//        materialReferences[index].index = index;</comment>
+        <comment type="line">//        materialReferences[index].referenceCount = 0;</comment>
+
+        <comment type="line">//        m_MaterialReferenceLookup[materialHashCode] = index;</comment>
+
+        <comment type="line">//        int spriteAssetHashCode =  spriteAsset.hashCode;</comment>
+
+        <comment type="line">//        if (!m_SpriteAssetReferenceLookup.ContainsKey(spriteAssetHashCode))</comment>
+        <comment type="line">//            m_SpriteAssetReferenceLookup.Add(spriteAssetHashCode, spriteAsset);</comment>
+
+        <comment type="line">//        m_countInternal += 1;</comment>
+
+        <comment type="line">//        return index;</comment>
+        <comment type="line">//    }</comment>
+        <comment type="line">//    else</comment>
+        <comment type="line">//    {</comment>
+        <comment type="line">//        return m_MaterialReferenceLookup[materialHashCode];</comment>
+        <comment type="line">//    }</comment>
+        <comment type="line">//}</comment>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function to check if the font asset is already referenced.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="font"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <type><name>bool</name></type> <name>Contains</name><parameter_list>(<parameter><decl><type><name>TMP_FontAsset</name></type> <name>font</name></decl></parameter>)</parameter_list>
+        <block>{
+            <if>if <condition>(<expr><call><name><name>m_FontAssetReferenceLookup</name><operator>.</operator><name>ContainsKey</name></name><argument_list>(<argument><expr><name><name>font</name><operator>.</operator><name>hashCode</name></name></expr></argument>)</argument_list></call></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><literal type="boolean">true</literal></expr>;</return></block></then></if>
+
+            <return>return <expr><literal type="boolean">false</literal></expr>;</return>
+        }</block></function>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function to check if the sprite asset is already referenced.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="font"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <type><name>bool</name></type> <name>Contains</name><parameter_list>(<parameter><decl><type><name>TMP_SpriteAsset</name></type> <name>sprite</name></decl></parameter>)</parameter_list>
+        <block>{
+            <if>if <condition>(<expr><call><name><name>m_FontAssetReferenceLookup</name><operator>.</operator><name>ContainsKey</name></name><argument_list>(<argument><expr><name><name>sprite</name><operator>.</operator><name>hashCode</name></name></expr></argument>)</argument_list></call></expr>)</condition><then>
+                <block type="pseudo"><return>return <expr><literal type="boolean">true</literal></expr>;</return></block></then></if>
+
+            <return>return <expr><literal type="boolean">false</literal></expr>;</return>
+        }</block></function>
+
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function returning the Font Asset corresponding to the provided hash code.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>bool</name></type> <name>TryGetFontAsset</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><modifier>out</modifier> <name>TMP_FontAsset</name></type> <name>fontAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <return>return <expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>TryGetFontAssetInternal</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>fontAsset</name></expr></argument>)</argument_list></call></expr>;</return>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Internal Function returning the Font Asset corresponding to the provided hash code.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>private</specifier> <type><name>bool</name></type> <name>TryGetFontAssetInternal</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><modifier>out</modifier> <name>TMP_FontAsset</name></type> <name>fontAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>fontAsset</name> <operator>=</operator> <literal type="null">null</literal></expr>;</expr_stmt>
+
+            <if>if <condition>(<expr><call><name><name>m_FontAssetReferenceLookup</name><operator>.</operator><name>TryGetValue</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>fontAsset</name></expr></argument>)</argument_list></call></expr>)</condition><then>
+            <block>{
+                <return>return <expr><literal type="boolean">true</literal></expr>;</return>
+            }</block></then></if>
+
+            <return>return <expr><literal type="boolean">false</literal></expr>;</return>
+        }</block></function>
+
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function returning the Sprite Asset corresponding to the provided hash code.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>bool</name></type> <name>TryGetSpriteAsset</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><modifier>out</modifier> <name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <return>return <expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>TryGetSpriteAssetInternal</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>spriteAsset</name></expr></argument>)</argument_list></call></expr>;</return>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Internal function returning the Sprite Asset corresponding to the provided hash code.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>private</specifier> <type><name>bool</name></type> <name>TryGetSpriteAssetInternal</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><modifier>out</modifier> <name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>spriteAsset</name> <operator>=</operator> <literal type="null">null</literal></expr>;</expr_stmt>
+
+            <if>if <condition>(<expr><call><name><name>m_SpriteAssetReferenceLookup</name><operator>.</operator><name>TryGetValue</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>spriteAsset</name></expr></argument>)</argument_list></call></expr>)</condition><then>
+            <block>{
+                <return>return <expr><literal type="boolean">true</literal></expr>;</return>
+            }</block></then></if>
+
+            <return>return <expr><literal type="boolean">false</literal></expr>;</return>
+        }</block></function>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function returning the Color Gradient Preset corresponding to the provided hash code.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="gradientPreset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>bool</name></type> <name>TryGetColorGradientPreset</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><modifier>out</modifier> <name>TMP_ColorGradient</name></type> <name>gradientPreset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <return>return <expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>TryGetColorGradientPresetInternal</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>gradientPreset</name></expr></argument>)</argument_list></call></expr>;</return>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Internal function returning the Color Gradient Preset corresponding to the provided hash code.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>private</specifier> <type><name>bool</name></type> <name>TryGetColorGradientPresetInternal</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><modifier>out</modifier> <name>TMP_ColorGradient</name></type> <name>gradientPreset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>gradientPreset</name> <operator>=</operator> <literal type="null">null</literal></expr>;</expr_stmt>
+
+            <if>if <condition>(<expr><call><name><name>m_ColorGradientReferenceLookup</name><operator>.</operator><name>TryGetValue</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>gradientPreset</name></expr></argument>)</argument_list></call></expr>)</condition><then>
+            <block>{
+                <return>return <expr><literal type="boolean">true</literal></expr>;</return>
+            }</block></then></if>
+
+            <return>return <expr><literal type="boolean">false</literal></expr>;</return>
+        }</block></function>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function returning the Font Material corresponding to the provided hash code.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>bool</name></type> <name>TryGetMaterial</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><modifier>out</modifier> <name>Material</name></type> <name>material</name></decl></parameter>)</parameter_list>
+        <block>{
+            <return>return <expr><call><name><name>MaterialReferenceManager</name><operator>.</operator><name>instance</name><operator>.</operator><name>TryGetMaterialInternal</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>material</name></expr></argument>)</argument_list></call></expr>;</return>
+        }</block></function>
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Internal function returning the Font Material corresponding to the provided hash code.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>private</specifier> <type><name>bool</name></type> <name>TryGetMaterialInternal</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>hashCode</name></decl></parameter>, <parameter><decl><type><modifier>out</modifier> <name>Material</name></type> <name>material</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name>material</name> <operator>=</operator> <literal type="null">null</literal></expr>;</expr_stmt>
+
+            <if>if <condition>(<expr><call><name><name>m_FontMaterialReferenceLookup</name><operator>.</operator><name>TryGetValue</name></name><argument_list>(<argument><expr><name>hashCode</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>material</name></expr></argument>)</argument_list></call></expr>)</condition><then>
+            <block>{
+                <return>return <expr><literal type="boolean">true</literal></expr>;</return>
+            }</block></then></if>
+
+            <return>return <expr><literal type="boolean">false</literal></expr>;</return>
+        }</block></function>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function to lookup a material based on hash code and returning the MaterialReference containing this material.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="hashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <comment type="line">//public bool TryGetMaterial(int hashCode, out MaterialReference materialReference)</comment>
+        <comment type="line">//{</comment>
+        <comment type="line">//    int materialIndex = -1;</comment>
+
+        <comment type="line">//    if (m_MaterialReferenceLookup.TryGetValue(hashCode, out materialIndex))</comment>
+        <comment type="line">//    {</comment>
+        <comment type="line">//        materialReference = materialReferences[materialIndex];</comment>
+
+        <comment type="line">//        return true;</comment>
+        <comment type="line">//    }</comment>
+
+        <comment type="line">//    materialReference = new MaterialReference();</comment>
+
+        <comment type="line">//    return false;</comment>
+        <comment type="line">//}</comment>
+
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// </comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <comment type="line">//public int GetMaterialIndex(TMP_FontAsset fontAsset)</comment>
+        <comment type="line">//{</comment>
+        <comment type="line">//    if (m_MaterialReferenceLookup.ContainsKey(fontAsset.materialHashCode))</comment>
+        <comment type="line">//        return m_MaterialReferenceLookup[fontAsset.materialHashCode];</comment>
+
+        <comment type="line">//    return -1;</comment>
+        <comment type="line">//}</comment>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// </comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="index"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <comment type="line">//public TMP_FontAsset GetFontAsset(int index)</comment>
+        <comment type="line">//{</comment>
+        <comment type="line">//    if (index &gt;= 0  &amp;&amp; index &lt; materialReferences.Length)</comment>
+        <comment type="line">//        return materialReferences[index].fontAsset;</comment>
+
+        <comment type="line">//    return null;</comment>
+        <comment type="line">//}</comment>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// </comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="materialHashCode"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">//public void SetDefaultMaterial(Material material, int materialHashCode, TMP_FontAsset fontAsset)</comment>
+        <comment type="line">//{</comment>
+        <comment type="line">//    if (!m_MaterialReferenceLookup.ContainsKey(materialHashCode))</comment>
+        <comment type="line">//    {</comment>
+        <comment type="line">//        materialReferences[0].fontAsset = fontAsset;</comment>
+        <comment type="line">//        materialReferences[0].material = material;</comment>
+        <comment type="line">//        materialReferences[0].index = 0;</comment>
+        <comment type="line">//        materialReferences[0].isDefaultMaterial = material.GetInstanceID() == fontAsset.material.GetInstanceID() ? true : false;</comment>
+        <comment type="line">//        materialReferences[0].referenceCount = 0;</comment>
+        <comment type="line">//        m_MaterialReferenceLookup[materialHashCode] = 0;</comment>
+
+        <comment type="line">//        // Compute Padding value and store it</comment>
+        <comment type="line">//        // TODO</comment>
+
+        <comment type="line">//        int fontHashCode = fontAsset.hashCode;</comment>
+
+        <comment type="line">//        if (!m_FontAssetReferenceLookup.ContainsKey(fontHashCode))</comment>
+        <comment type="line">//            m_FontAssetReferenceLookup.Add(fontHashCode, fontAsset);</comment>
+        <comment type="line">//    }</comment>
+        <comment type="line">//    else</comment>
+        <comment type="line">//    {</comment>
+        <comment type="line">//        materialReferences[0].fontAsset = fontAsset;</comment>
+        <comment type="line">//        materialReferences[0].material = material;</comment>
+        <comment type="line">//        materialReferences[0].index = 0;</comment>
+        <comment type="line">//        materialReferences[0].referenceCount = 0;</comment>
+        <comment type="line">//        m_MaterialReferenceLookup[materialHashCode] = 0;</comment>
+        <comment type="line">//    }</comment>
+        <comment type="line">//    // Compute padding</comment>
+        <comment type="line">//    // TODO</comment>
+
+        <comment type="line">//    m_countInternal = 1;</comment>
+        <comment type="line">//}</comment>
+
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// </comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">//public void Clear()</comment>
+        <comment type="line">//{</comment>
+        <comment type="line">//    //m_currentIndex = 0;</comment>
+        <comment type="line">//    m_MaterialReferenceLookup.Clear();</comment>
+        <comment type="line">//    m_SpriteAssetReferenceLookup.Clear();</comment>
+        <comment type="line">//    m_FontAssetReferenceLookup.Clear();</comment>
+        <comment type="line">//}</comment>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function to clear the reference count for each of the material references.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">//public void ClearReferenceCount()</comment>
+        <comment type="line">//{</comment>
+        <comment type="line">//    m_countInternal = 0;</comment>
+
+        <comment type="line">//    for (int i = 0; i &lt; materialReferences.Length; i++)</comment>
+        <comment type="line">//    {</comment>
+        <comment type="line">//        if (materialReferences[i].fontAsset == null)</comment>
+        <comment type="line">//            return;</comment>
+
+        <comment type="line">//        materialReferences[i].referenceCount = 0;</comment>
+        <comment type="line">//    }</comment>
+        <comment type="line">//}</comment>
+
+    }</block></class>
+
+
+
+    <struct><specifier>public</specifier> struct <name>MaterialReference</name>
+    <block>{
+
+        <decl_stmt><decl><specifier>public</specifier> <type><name>int</name></type> <name>index</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>public</specifier> <type><name>TMP_FontAsset</name></type> <name>fontAsset</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>public</specifier> <type><name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>public</specifier> <type><name>Material</name></type> <name>material</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>public</specifier> <type><name>bool</name></type> <name>isDefaultMaterial</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>public</specifier> <type><name>bool</name></type> <name>isFallbackMaterial</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>public</specifier> <type><name>Material</name></type> <name>fallbackMaterial</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>public</specifier> <type><name>float</name></type> <name>padding</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>public</specifier> <type><name>int</name></type> <name>referenceCount</name></decl>;</decl_stmt>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Constructor for new Material Reference.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="index"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="padding"&gt;&lt;/param&gt;</comment>
+        <constructor><specifier>public</specifier> <name>MaterialReference</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>index</name></decl></parameter>, <parameter><decl><type><name>TMP_FontAsset</name></type> <name>fontAsset</name></decl></parameter>, <parameter><decl><type><name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl></parameter>, <parameter><decl><type><name>Material</name></type> <name>material</name></decl></parameter>, <parameter><decl><type><name>float</name></type> <name>padding</name></decl></parameter>)</parameter_list>
+        <block>{
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>index</name></name> <operator>=</operator> <name>index</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>fontAsset</name></name> <operator>=</operator> <name>fontAsset</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>spriteAsset</name></name> <operator>=</operator> <name>spriteAsset</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>material</name></name> <operator>=</operator> <name>material</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>isDefaultMaterial</name></name> <operator>=</operator> <ternary><condition><expr><call><name><name>material</name><operator>.</operator><name>GetInstanceID</name></name><argument_list>()</argument_list></call> <operator>==</operator> <call><name><name>fontAsset</name><operator>.</operator><name>material</name><operator>.</operator><name>GetInstanceID</name></name><argument_list>()</argument_list></call></expr> ?</condition><then> <expr><literal type="boolean">true</literal></expr> </then><else>: <expr><literal type="boolean">false</literal></expr></else></ternary></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>isFallbackMaterial</name></name> <operator>=</operator> <literal type="boolean">false</literal></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>fallbackMaterial</name></name> <operator>=</operator> <literal type="null">null</literal></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>padding</name></name> <operator>=</operator> <name>padding</name></expr>;</expr_stmt>
+            <expr_stmt><expr><name><name>this</name><operator>.</operator><name>referenceCount</name></name> <operator>=</operator> <literal type="number">0</literal></expr>;</expr_stmt>
+        }</block></constructor>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function to check if a certain font asset is contained in the material reference array.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="materialReferences"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>bool</name></type> <name>Contains</name><parameter_list>(<parameter><decl><type><name><name>MaterialReference</name><index>[]</index></name></type> <name>materialReferences</name></decl></parameter>, <parameter><decl><type><name>TMP_FontAsset</name></type> <name>fontAsset</name></decl></parameter>)</parameter_list>
+        <block>{
+            <decl_stmt><decl><type><name>int</name></type> <name>id</name> <init>= <expr><call><name><name>fontAsset</name><operator>.</operator><name>GetInstanceID</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+
+            <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name><name>materialReferences</name><operator>.</operator><name>Length</name></name> <operator>&amp;&amp;</operator> <name><name>materialReferences</name><index>[<expr><name>i</name></expr>]</index></name><operator>.</operator><name>fontAsset</name> <operator>!=</operator> <literal type="null">null</literal></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control>
+            <block>{
+                <if>if <condition>(<expr><name><name>materialReferences</name><index>[<expr><name>i</name></expr>]</index></name><operator>.</operator><call><name><name>fontAsset</name><operator>.</operator><name>GetInstanceID</name></name><argument_list>()</argument_list></call> <operator>==</operator> <name>id</name></expr>)</condition><then>
+                    <block type="pseudo"><return>return <expr><literal type="boolean">true</literal></expr>;</return></block></then></if>
+            }</block></for>
+
+            <return>return <expr><literal type="boolean">false</literal></expr>;</return>
+        }</block></function>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// Function to add a new material reference and returning its index in the material reference array.</comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="fontAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="materialReferences"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="materialReferenceIndexLookup"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>int</name></type> <name>AddMaterialReference</name><parameter_list>(<parameter><decl><type><name>Material</name></type> <name>material</name></decl></parameter>, <parameter><decl><type><name>TMP_FontAsset</name></type> <name>fontAsset</name></decl></parameter>, <parameter><decl><type><name><name>MaterialReference</name><index>[]</index></name></type> <name>materialReferences</name></decl></parameter>, <parameter><decl><type><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>int</name></argument>&gt;</argument_list></name></type> <name>materialReferenceIndexLookup</name></decl></parameter>)</parameter_list>
+        <block>{
+            <decl_stmt><decl><type><name>int</name></type> <name>materialID</name> <init>= <expr><call><name><name>material</name><operator>.</operator><name>GetInstanceID</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <decl_stmt><decl><type><name>int</name></type> <name>index</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+
+            <if>if <condition>(<expr><call><name><name>materialReferenceIndexLookup</name><operator>.</operator><name>TryGetValue</name></name><argument_list>(<argument><expr><name>materialID</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>index</name></expr></argument>)</argument_list></call></expr>)</condition><then>
+            <block>{
+                <return>return <expr><name>index</name></expr>;</return>
+            }</block></then>
+            <else>else
+            <block>{
+                <expr_stmt><expr><name>index</name> <operator>=</operator> <name><name>materialReferenceIndexLookup</name><operator>.</operator><name>Count</name></name></expr>;</expr_stmt>
+
+                <comment type="line">// Add new reference index</comment>
+                <expr_stmt><expr><name><name>materialReferenceIndexLookup</name><index>[<expr><name>materialID</name></expr>]</index></name> <operator>=</operator> <name>index</name></expr>;</expr_stmt>
+
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>index</name> <operator>=</operator> <name>index</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>fontAsset</name> <operator>=</operator> <name>fontAsset</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>spriteAsset</name> <operator>=</operator> <literal type="null">null</literal></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>material</name> <operator>=</operator> <name>material</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>isDefaultMaterial</name> <operator>=</operator> <ternary><condition><expr><name>materialID</name> <operator>==</operator> <call><name><name>fontAsset</name><operator>.</operator><name>material</name><operator>.</operator><name>GetInstanceID</name></name><argument_list>()</argument_list></call></expr> ?</condition><then> <expr><literal type="boolean">true</literal></expr> </then><else>: <expr><literal type="boolean">false</literal></expr></else></ternary></expr>;</expr_stmt>
+                <comment type="line">//materialReferences[index].padding = 0;</comment>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>referenceCount</name> <operator>=</operator> <literal type="number">0</literal></expr>;</expr_stmt>
+
+                <return>return <expr><name>index</name></expr>;</return>
+            }</block></else></if>
+        }</block></function>
+
+
+        <comment type="line">/// &lt;summary&gt;</comment>
+        <comment type="line">/// </comment>
+        <comment type="line">/// &lt;/summary&gt;</comment>
+        <comment type="line">/// &lt;param name="material"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="spriteAsset"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="materialReferences"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;param name="materialReferenceIndexLookup"&gt;&lt;/param&gt;</comment>
+        <comment type="line">/// &lt;returns&gt;&lt;/returns&gt;</comment>
+        <function><specifier>public</specifier> <specifier>static</specifier> <type><name>int</name></type> <name>AddMaterialReference</name><parameter_list>(<parameter><decl><type><name>Material</name></type> <name>material</name></decl></parameter>, <parameter><decl><type><name>TMP_SpriteAsset</name></type> <name>spriteAsset</name></decl></parameter>, <parameter><decl><type><name><name>MaterialReference</name><index>[]</index></name></type> <name>materialReferences</name></decl></parameter>, <parameter><decl><type><name><name>Dictionary</name><argument_list type="generic">&lt;<argument><name>int</name></argument>, <argument><name>int</name></argument>&gt;</argument_list></name></type> <name>materialReferenceIndexLookup</name></decl></parameter>)</parameter_list>
+        <block>{
+            <decl_stmt><decl><type><name>int</name></type> <name>materialID</name> <init>= <expr><call><name><name>material</name><operator>.</operator><name>GetInstanceID</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <decl_stmt><decl><type><name>int</name></type> <name>index</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+
+            <if>if <condition>(<expr><call><name><name>materialReferenceIndexLookup</name><operator>.</operator><name>TryGetValue</name></name><argument_list>(<argument><expr><name>materialID</name></expr></argument>, <argument><modifier>out</modifier> <expr><name>index</name></expr></argument>)</argument_list></call></expr>)</condition><then>
+            <block>{
+                <return>return <expr><name>index</name></expr>;</return>
+            }</block></then>
+            <else>else
+            <block>{
+                <expr_stmt><expr><name>index</name> <operator>=</operator> <name><name>materialReferenceIndexLookup</name><operator>.</operator><name>Count</name></name></expr>;</expr_stmt>
+
+                <comment type="line">// Add new reference index</comment>
+                <expr_stmt><expr><name><name>materialReferenceIndexLookup</name><index>[<expr><name>materialID</name></expr>]</index></name> <operator>=</operator> <name>index</name></expr>;</expr_stmt>
+
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>index</name> <operator>=</operator> <name>index</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>fontAsset</name> <operator>=</operator> <name><name>materialReferences</name><index>[<expr><literal type="number">0</literal></expr>]</index></name><operator>.</operator><name>fontAsset</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>spriteAsset</name> <operator>=</operator> <name>spriteAsset</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>material</name> <operator>=</operator> <name>material</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>isDefaultMaterial</name> <operator>=</operator> <literal type="boolean">true</literal></expr>;</expr_stmt>
+                <comment type="line">//materialReferences[index].padding = 0;</comment>
+                <expr_stmt><expr><name><name>materialReferences</name><index>[<expr><name>index</name></expr>]</index></name><operator>.</operator><name>referenceCount</name> <operator>=</operator> <literal type="number">0</literal></expr>;</expr_stmt>
+
+                <return>return <expr><name>index</name></expr>;</return>
+            }</block></else></if>
+        }</block></function>
+    }</block></struct>
+}</block></namespace>
+</unit>
