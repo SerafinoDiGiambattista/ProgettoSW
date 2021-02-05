@@ -2,8 +2,10 @@ language: java
 
 os: linux
 dist: trusty
-jdk: openjdk-11-jre-headless 
-
+jdk: openjdk11 
+env:
+        - _JAVA_OPTIONS="--add-opens=java.base/java.util=ALL-UNNAMED -Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw"
+        
 before_install:
   - cd Tesiplugin
   - chmod +x gradlew
