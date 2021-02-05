@@ -12,8 +12,10 @@ before_install:
  
 job:
 include: 
+- stage : build of src
 script:
 - ./gradlew build  
+- stage : build of buildSrc
 script :
 - cd buildSrc
 - chmod +x gradlew
