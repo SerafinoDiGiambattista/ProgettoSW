@@ -3,7 +3,7 @@ package tesi;
 
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
-import org.junit.jupiter.api.BeforeEach;
+ 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,11 +12,6 @@ import java.util.Scanner;
 
 public class MatriceTest {
     
-@BeforeEach
-void setUp() throws Exception{
-        System.setProperty("java.awt.headless", "true");
-
-        }
     
     private ArrayList<Document> ndoc = new ListDocument().getNdoc();
 
