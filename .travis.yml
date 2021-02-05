@@ -10,13 +10,11 @@ before_install:
 - chmod +x gradlew
 - ./gradlew clean
  
-jobs:
+matrix:
 include: 
-- stage : build of src 
-  script: ./gradlew build  
+- script: ./gradlew build  
 
-- stage : build of buildSrc
-  script : cd buildSrc && chmod +x gradlew && ./gradlew build  
+- script : cd buildSrc && chmod +x gradlew && ./gradlew build  
 
 notifications:
    slack: progettosw:ygB8Ex6XUsdO8GlY1uOoAQoy
