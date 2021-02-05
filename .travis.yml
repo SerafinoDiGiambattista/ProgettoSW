@@ -15,7 +15,7 @@ include:
 script:
 - ./gradlew build  
 script :
-- cd buildSrc && gradle build
+- cd buildSrc && ./gradlew build  
 
 
 notifications:
