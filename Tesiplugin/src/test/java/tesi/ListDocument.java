@@ -77,8 +77,8 @@ public ArrayList<String> getListClass(){
     ArrayList<String> files= new ArrayList<String>();
     File file = new File("C#/Person\\Person.xml");
     files.add(file.getAbsolutePath());
-    files.add("C#\\ClasseB.xml");
     files.add("C#\\ClasseA.xml");
+    files.add("C#\\ClasseB.xml");
     files.add("C#\\ClasseC.xml");
     
     return files;
