@@ -48,6 +48,6 @@ class EsempiotesiPluginFunctionalTest extends Specification {
 
 
         then:
-        result.task(":prova").outcome == SUCCESS
+        result.task(":prova").outcome == FAILED
     }
 }
