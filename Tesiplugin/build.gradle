@@ -76,10 +76,8 @@ run{
 
 apply plugin: pluginTesi.ControllPlugin
 prova {
-    estensione {
-        file1 = file('config/Controll/config.properties')
+        file2 = file('config/Controll/config.properties')
     }
-}
 
 checkstyle {
     toolVersion = checkstyleVersion
@@ -105,5 +103,5 @@ checkstyleTest {
 
 // codenarcMain{
    //  source = 'buildSrc/src/main/groovy'
-// }
+ //}
 
