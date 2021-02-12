@@ -11,10 +11,11 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - cd Tesiplugin
+  - ./gradlew spock unitTest
   - chmod +x gradlew
-  
+  - ./gradlew clean
+ 
 script:
-  
   - ./gradlew build
   
 notifications:
