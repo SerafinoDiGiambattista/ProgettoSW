@@ -1,0 +1,2 @@
+pluginTesi/BuildLogicFunctionalTest.java
+ pluginTesi.BuildLogicFunctionalTest
