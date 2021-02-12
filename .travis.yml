@@ -12,7 +12,7 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
   - cd Tesiplugin
   - chmod +x gradlew
-  - ./gradlew test
+  - ./gradlew clean
  
 script:
   - ./gradlew build
