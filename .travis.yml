@@ -13,9 +13,10 @@ before_install:
   - cd Tesiplugin
   - chmod +x gradlew
   - ./gradlew clean
+  - ./gradlew assemble
  
 script:
-  - ./gradlew assemble
+  
   - ./gradlew build
   
 notifications:
