@@ -32,6 +32,12 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
 
+test {
+    testLogging {
+        events "failed"
+        exceptionFormat "short"
+    }
+}
 
 }
 
