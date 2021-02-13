@@ -31,7 +31,7 @@ class EsempiotesiPluginFunctionalTest extends Specification {
 
     def "testing configuration"() {
         given:
-             File testFile = testProjectDir.newFile('config.properties') <<"""build/functionalTest/PRJs_RecallRisultatiNOC.txt = Assertion*,1000,f"""
+             File testFile = testProjectDir.newFile('config.properties') <<"""functional-test/PRJs_RecallRisultatiNOC.txt = Assertion*,1000,f"""
 
         buildFile  <<"""
         prova{
