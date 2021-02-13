@@ -17,8 +17,9 @@ class EsempiotesiPluginFunctionalTest extends Specification {
     @Rule
     TemporaryFolder testProjectDir = new TemporaryFolder()
     File buildFile
-
+    File testFile
     def setup() {
+        testFile = testProjectDir.newFile('config.properties')
         buildFile = testProjectDir.newFile('build.gradle')
         buildFile << """
             plugins {
@@ -31,7 +32,7 @@ class EsempiotesiPluginFunctionalTest extends Specification {
 
     def "testing configuration"() {
         given:
-             File testFile = testProjectDir.newFile('config.properties') << 'functional-test/PRJs_RecallRisultatiNOC.txt = Assertion*,1000,f'
+    testFile << 'functional-test/PRJs_RecallRisultatiNOC.txt = Assertion*,1000,f'
 
         buildFile  <<"""
         prova{
