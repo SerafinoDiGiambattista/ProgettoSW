@@ -5,9 +5,8 @@ install: skip
 os: linux
 dist: trusty
 jdk:
-  - oraclejdk7
   - oraclejdk8
-  - oraclejdk9
+
  
 before_install:
   - "export DISPLAY=:99.0"
