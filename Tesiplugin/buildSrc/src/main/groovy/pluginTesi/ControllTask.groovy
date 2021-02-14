@@ -8,6 +8,8 @@ import org.codehaus.groovy.control.messages.WarningMessage
 
 class ControllTask extends DefaultTask{
 @InputFile
+	private static final long serialVersionUID = 4588530037560142483L;
+
 final Property<File> file2 = project.objects.property(File)
 
 
