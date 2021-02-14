@@ -13,6 +13,7 @@ import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 
 class EsempiotesiPluginFunctionalTest extends Specification {
+private static final long serialVersionUID = 1113799434508676095L;
 
     @Rule
     TemporaryFolder testProjectDir = new TemporaryFolder()
