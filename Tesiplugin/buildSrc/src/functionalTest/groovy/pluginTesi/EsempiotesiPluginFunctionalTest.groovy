@@ -8,13 +8,13 @@ import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 import org.gradle.testkit.runner.GradleRunner
 import java.io.Serializable
-
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 
-class EsempiotesiPluginFunctionalTest extends Specification implements Serializable {
-     @Rule
+class EsempiotesiPluginFunctionalTest extends Specification implements Serializable{
+
+    @Rule
     TemporaryFolder testProjectDir = new TemporaryFolder()
     File buildFile
     File testFile
@@ -31,10 +31,10 @@ class EsempiotesiPluginFunctionalTest extends Specification implements Serializa
     
 
     def "testing configuration"() {
-       
         given:
-    final long serialVersionUID =  3742318830738515599;
-    testFile << 'functional-test/PRJs_RecallRisultatiNOC.txt = Assertion*,1000,f'
+        final long serialVersionUID =  3742318830738515599;
+
+        testFile << """functional-test/PRJs_RecallRisultatiNOC.txt = Assertion*,1000,f"""
 
         buildFile  <<"""
         prova{
@@ -46,16 +46,5 @@ class EsempiotesiPluginFunctionalTest extends Specification implements Serializa
         
         
         
-        
-        when:
-        def result = GradleRunner.create()
-                .withProjectDir(testProjectDir.root)
-                .withArguments('prova')
-                .withPluginClasspath()
-                .build()
-
-
-        then:
-        result.task(":prova").outcome == SUCCESS
     }
 }
