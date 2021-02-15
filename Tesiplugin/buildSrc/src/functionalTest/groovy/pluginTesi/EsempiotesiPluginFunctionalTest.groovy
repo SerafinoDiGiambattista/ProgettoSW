@@ -31,7 +31,7 @@ class EsempiotesiPluginFunctionalTest extends Specification implements Serializa
     
 
     def "testing configuration"() {
-          private static final long serialVersionUID =  3742318830738515599;
+         static final long serialVersionUID =  3742318830738515599;
 
         given:
     testFile << 'functional-test/PRJs_RecallRisultatiNOC.txt = Assertion*,1000,f'
