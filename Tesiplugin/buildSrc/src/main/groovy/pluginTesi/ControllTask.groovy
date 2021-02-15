@@ -5,13 +5,12 @@ import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.TaskAction
 import javax.swing.JTable
 import org.codehaus.groovy.control.messages.WarningMessage
-import java.io.Serializable
 
-class ControllTask extends DefaultTask implements Serializable {
- private static final long serialVersionUID =  3742318830738515599;
-	@InputFile
+import javax.swing.table.DefaultTableModel
+
+class ControllTask extends DefaultTask {
+@InputFile
 final Property<File> file2 = project.objects.property(File)
-
 
 
 
@@ -138,6 +137,12 @@ String valor = prop.get(key).toString()
       // leggo il file contente la tabella
        JTable table
 
+        DefaultTableModel model;
+       table = new JTable(model) {
+
+           private static final long serialVersionUID = 1L;
+
+       }
    //   try {
          ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(key)))
          table = (JTable) ois.readObject()
@@ -172,19 +177,4 @@ String valor = prop.get(key).toString()
 
 
 }
-
-
-
-    abstract class Ser implements Serializable {
-        static final long serialVersionUID = Refer.globalSerialVersionUID();
-    }
-
-    public class Refer {
-        static long globalSerialVersionUID() {
-            return 42L;
-        }
-    }
-
    }
-
-
