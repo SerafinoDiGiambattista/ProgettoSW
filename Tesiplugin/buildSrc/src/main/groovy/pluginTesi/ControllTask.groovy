@@ -8,7 +8,7 @@ import org.codehaus.groovy.control.messages.WarningMessage
 import java.io.Serializable
 
 class ControllTask extends DefaultTask implements Serializable {
- private static final long serialVersionUID =  3742318830738515599L;
+ private static final long serialVersionUID =  3742318830738515599;
 	@InputFile
 final Property<File> file2 = project.objects.property(File)
 
