@@ -7,11 +7,11 @@ import javax.swing.JTable
 import org.codehaus.groovy.control.messages.WarningMessage
 import java.io.Serializable
 
-class ControllTask extends DefaultTask implements Serializable{
+class ControllTask extends DefaultTask  {
 @InputFile
 final Property<File> file2 = project.objects.property(File)
 
-   static final long serialVersionUID = 42L;
+
 
 
     /*
@@ -171,4 +171,16 @@ String valor = prop.get(key).toString()
 
 
 }
+
+
    }
+
+abstract class Ser implements Serializable {
+    static final long serialVersionUID = Ref.globalSerialVersionUID();
+}
+
+class Ref {
+    static long globalSerialVersionUID() {
+        return 42L;
+    }
+}
