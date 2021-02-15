@@ -6,13 +6,10 @@ import org.gradle.api.tasks.TaskAction
 import javax.swing.JTable
 import org.codehaus.groovy.control.messages.WarningMessage
 
-import javax.swing.table.DefaultTableModel
-
 class ControllTask extends DefaultTask {
 @InputFile
 final Property<File> file2 = project.objects.property(File)
-
-
+     
 
     /*
      COSA DA MIGLIORARE
@@ -137,12 +134,6 @@ String valor = prop.get(key).toString()
       // leggo il file contente la tabella
        JTable table
 
-        DefaultTableModel model;
-       table = new JTable(model) {
-
-           private static final long serialVersionUID = 1L;
-
-       }
    //   try {
          ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(key)))
          table = (JTable) ois.readObject()
