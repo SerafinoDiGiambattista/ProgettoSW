@@ -11,7 +11,7 @@ class ControllTask extends DefaultTask{
  
 final Property<File> file2 = project.objects.property(File)
 
-
+ ANY-ACCESS-MODIFIER static final long serialVersionUID = 42L;
 
     /*
      COSA DA MIGLIORARE
@@ -136,15 +136,15 @@ String valor = prop.get(key).toString()
       // leggo il file contente la tabella
        JTable table
 
-      try {
+     // try {
          ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(key)))
          table = (JTable) ois.readObject()
          ois.close()
-      }
-      catch(Exception e) {
-        e.print("Nome file non valido o inesistente")
+     // }
+      //catch(Exception e) {
+        //e.print("Nome file non valido o inesistente")
 
-      }
+      //}
 
       //trovo il numero della colonna da considerare
       int column =0
