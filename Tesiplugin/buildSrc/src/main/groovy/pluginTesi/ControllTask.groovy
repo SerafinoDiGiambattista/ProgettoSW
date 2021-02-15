@@ -173,14 +173,17 @@ String valor = prop.get(key).toString()
 }
 
 
+
+    abstract class Ser implements Serializable {
+        static final long serialVersionUID = Refer.globalSerialVersionUID();
+    }
+
+    public class Refer {
+        static long globalSerialVersionUID() {
+            return 42L;
+        }
+    }
+
    }
 
-abstract class Ser implements Serializable {
-    static final long serialVersionUID = Ref.globalSerialVersionUID();
-}
 
-class Ref {
-    static long globalSerialVersionUID() {
-        return 42L;
-    }
-}
