@@ -9,7 +9,8 @@ import org.codehaus.groovy.control.messages.WarningMessage
 class ControllTask extends DefaultTask {
 @InputFile
 final Property<File> file2 = project.objects.property(File)
-     
+
+
 
     /*
      COSA DA MIGLIORARE
@@ -135,8 +136,10 @@ String valor = prop.get(key).toString()
        JTable table
 
    //   try {
-         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(key)))
+         FileInputStream is = new FileInputStream(new File(key))
+         ObjectInputStream ois = new ObjectInputStream(is)
          table = (JTable) ois.readObject()
+
          ois.close()
      // }
       //catch(Exception e) {
