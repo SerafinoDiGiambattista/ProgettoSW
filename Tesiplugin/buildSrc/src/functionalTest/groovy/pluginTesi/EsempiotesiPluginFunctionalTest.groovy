@@ -27,8 +27,8 @@ class EsempiotesiPluginFunctionalTest extends Specification {
             }
         """
     }
-    
-    
+
+
 
     def "testing configuration"() {
         given:
@@ -41,15 +41,12 @@ class EsempiotesiPluginFunctionalTest extends Specification {
       
         }
         """
-        
-        
-        
-        
-        
+
+
         when:
         def result = GradleRunner.create()
                 .withProjectDir(testProjectDir.root)
-                .withArguments('prova')
+                .withArguments('--configuration-cache','prova')
                 .withPluginClasspath()
                 .build()
 
