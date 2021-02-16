@@ -136,11 +136,10 @@ String valor = prop.get(key).toString()
        JTable table
 
    //   try {
-         FileInputStream is = new FileInputStream(new File(key))
-         ObjectInputStream ois = new ObjectInputStream(is)
-         table = (JTable) ois.readObject()
 
-         ois.close()
+       new FileInputStream(new File(key)).withObjectInputStream(getClass().classLoader) { ois ->
+             table =(JTable) ois.readObject()
+       }
      // }
       //catch(Exception e) {
        // e.print("Nome file non valido o inesistente")
