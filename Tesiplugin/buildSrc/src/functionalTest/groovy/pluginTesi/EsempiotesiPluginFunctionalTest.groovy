@@ -46,7 +46,7 @@ class EsempiotesiPluginFunctionalTest extends Specification {
         when:
         def result = GradleRunner.create()
                 .withProjectDir(testProjectDir.root)
-                .withArguments('--configuration-cache','prova')
+                .withArguments('prova')
                 .withPluginClasspath()
                 .build()
 
