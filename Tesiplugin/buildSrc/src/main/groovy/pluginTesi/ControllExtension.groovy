@@ -1,4 +1,5 @@
 package pluginTesi
+
 import groovy.transform.CompileStatic
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
