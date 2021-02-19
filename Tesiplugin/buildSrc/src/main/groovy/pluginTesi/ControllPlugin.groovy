@@ -1,9 +1,7 @@
 package pluginTesi
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-
-
-
 
 class ControllPlugin implements Plugin<Project> {
 
@@ -12,9 +10,8 @@ class ControllPlugin implements Plugin<Project> {
         project.extensions.create('prova', ControllExtension)
 
         project.tasks.create('prova', ControllTask) {
-
             file2 = project.prova.file2
         }
-
     }
+
 }
