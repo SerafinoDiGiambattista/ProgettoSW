@@ -34,12 +34,7 @@ dependencies {
 
 
 }
-test {
-    testLogging {
-        events "failed"
-        exceptionFormat "short"
-    }
-}
+
 
 application {
     // Define the main class for the application.
@@ -62,12 +57,11 @@ checkstyle {
 
 
 
-//codenarc{
-//
-//  toolVersion= codeNarcVersion
-// config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
+codenarc{
 
-//}
+  toolVersion= codeNarcVersion
+ config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
+}
 
 
 checkstyleMain {
@@ -77,9 +71,9 @@ checkstyleTest {
     source ='src/test/java'
 }
 
-//codenarcMain{
-//  source = 'buildSrc/src/main/groovy'
-//}
+codenarcMain{
+  source = 'buildSrc/src/main/groovy'
+}
 
 test {
     useJUnitPlatform()
