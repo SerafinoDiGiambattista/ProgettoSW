@@ -227,7 +227,8 @@ public class Matrice {
 		System.out.print("Inserisici chiudi per chiudere le tabelle");
 		if (scan.nextLine().equals("chiudi")){
 			frame1.dispose();
-		frame2.dispose();
+			frame2.dispose();
+		}
 	}
-	}
+
 }

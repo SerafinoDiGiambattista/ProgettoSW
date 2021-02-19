@@ -34,6 +34,12 @@ dependencies {
 
 
 }
+test {
+    testLogging {
+        events "failed"
+        exceptionFormat "short"
+    }
+}
 
 application {
     // Define the main class for the application.
@@ -43,12 +49,11 @@ run{
     standardInput = System.in
 }
 
-apply plugin: ControllPlugin
+apply plugin: pluginTesi.ControllPlugin
 prova {
-    estensione {
-        file1 = file('config/Controll/config.properties')
+        file2 = file('config/Controll/config.properties')
     }
-}
+
 
 checkstyle {
     toolVersion = checkstyleVersion

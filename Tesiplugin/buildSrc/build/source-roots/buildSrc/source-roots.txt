@@ -1,3 +1,6 @@
+src\functionalTest\resources
+src\functionalTest\java
+src\functionalTest\groovy
 src\main\resources
 src\main\java
 src\main\groovy

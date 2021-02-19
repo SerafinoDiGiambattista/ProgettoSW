@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControllTask.groovy</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">buildSrc</a> &gt; <a href="index.source.html" class="el_package">pluginTesi</a> &gt; <span class="el_source">ControllTask.groovy</span></div><h1>ControllTask.groovy</h1><pre class="source lang-java linenums">package pluginTesi
+import org.gradle.api.DefaultTask
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.TaskAction
+import javax.swing.JTable
+import org.codehaus.groovy.control.messages.WarningMessage
+
+class ControllTask extends DefaultTask{
+@InputFile
+final Property&lt;File&gt; file2 = project.objects.property(File)
+
+
+
+    /*
+     COSA DA MIGLIORARE
+     mettere le varie eccezioni quando il formato del file non Ã¨ rispettato
+	 COSA SUCCEDE SE LA TABELLA VUOTA???
+     ipotetico vedere se il formato file di configurazione accetta spazi vuoti
+     */
+
+
+    // queso metodo mi permette di prendere le varie sottostringhe da una stringa
+    static String[] splitString(String valor, String lim){
+
+<span class="nc" id="L26">       String[]  sub_string</span>
+
+<span class="nc bnc" id="L28" title="All 2 branches missed.">       if(valor.contains(lim)) {</span>
+<span class="nc" id="L29">         sub_string = valor.split(lim)</span>
+<span class="nc" id="L30">        }</span>
+       else{
+<span class="nc" id="L32">        throw new IllegalArgumentException(&quot;Non Ã¨ presente il separatore&quot;)</span>
+    }
+
+<span class="nc bnc" id="L35" title="All 20 branches missed.">    if(sub_string.size()&lt;3 || sub_string.size()&gt;4) throw new ThresholdExceededException(&quot;Numero valori di config.properties non consentito&quot;)</span>
+
+<span class="nc" id="L37">       sub_string</span>
+
+   }
+
+    static int ContaColonna(Vector&lt;String&gt; res, JTable table){
+<span class="nc" id="L42">    boolean pass = false</span>
+<span class="nc" id="L43">    int column =0</span>
+<span class="nc bnc" id="L44" title="All 12 branches missed.">    for (int i = 0; i &lt; table.getColumnCount(); i++) {</span>
+<span class="nc bnc" id="L45" title="All 4 branches missed.">        if (res.get(0) == table.getColumnName(i).toString()) {</span>
+<span class="nc" id="L46">            column = i</span>
+<span class="nc" id="L47">            pass = true</span>
+
+        }
+<span class="nc" id="L50">    }</span>
+<span class="nc bnc" id="L51" title="All 4 branches missed.">    if(!pass) throw new ParameterInvalidException(&quot;Nome parametro inserito non valido&quot;)</span>
+
+<span class="nc" id="L53">    column</span>
+}
+
+    static void  ControlloTabella(int column, Vector&lt;String&gt; res, JTable table){
+
+<span class="nc bnc" id="L58" title="All 18 branches missed.">      if(res.get(3)=='f' || res.get(3)=='w')  {}</span>
+<span class="nc" id="L59">        else{throw new IllegalArgumentException(&quot;Inserire il carattere f oppure w&quot;)}</span>
+
+
+
+<span class="nc" id="L63">        String ricerca=null</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if(res.get(1).contains('*'))  ricerca=res.get(1).replace('*','')</span>
+
+<span class="nc" id="L66">        boolean pass = false</span>
+
+<span class="nc bnc" id="L68" title="All 12 branches missed.">      for(int j=0; j&lt;table.getRowCount(); j++) {</span>
+<span class="nc" id="L69">          String nome_classe = table.getModel().getValueAt(j, 0).toString()</span>
+<span class="nc bnc" id="L70" title="All 28 branches missed.">          if (res.get(1) == '*' || res.get(1) == nome_classe || (ricerca!=null &amp;&amp; nome_classe.contains(ricerca)) ){</span>
+<span class="nc" id="L71">              pass=true</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">              if ((Integer.parseInt(res.get(2)) &lt; Integer.parseInt(table.getModel().getValueAt(j, column) as String))) {</span>
+<span class="nc bnc" id="L73" title="All 4 branches missed.">                  if (res.get(3) == 'f') {</span>
+<span class="nc" id="L74">                      throw new ThresholdExceededException(&quot;La soglia del parametro &quot; + res.get(0) + &quot; e stata superata&quot;)</span>
+<span class="nc" id="L75">                  }</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">                 else if (res.get(3)==('w')) {</span>
+                      //idea priorittizare rispetto in base alla differenza tra la soglia impostato e della classe considerata ma il problema Ã¨ che si deve fare per ogni parametro ;-(
+<span class="nc" id="L78">                      WarningMessage war = new WarningMessage(j, 'WARNING:' + res.get(0) + ' Soglia superata della classe : ' + table.getModel().getValueAt(j, 0).toString(), null, null)</span>
+<span class="nc" id="L79">                      println war.getMessage()</span>
+                  }
+
+              }
+
+          }
+
+<span class="nc" id="L86">      }</span>
+<span class="nc bnc" id="L87" title="All 4 branches missed.">        if(!pass) throw new InvalidClassException(&quot;Nome classe non valido&quot;)</span>
+  }
+
+    static void ControlloTabellaNoc(Vector&lt;String&gt; res, JTable table){
+
+<span class="nc bnc" id="L92" title="All 18 branches missed.">        if(res.get(2)=='f' || res.get(2)=='w')  {}</span>
+<span class="nc" id="L93">        else{throw new IllegalArgumentException(&quot;Inserire il carattere f oppure w&quot;)}</span>
+
+<span class="nc" id="L95">        String ricerca=null</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if(res.get(0).contains(&quot;*&quot;))  ricerca=res.get(0).replace('*','')</span>
+
+<span class="nc" id="L98">        boolean pass=false</span>
+
+<span class="nc bnc" id="L100" title="All 12 branches missed.">        for(int j=0; j&lt;table.getRowCount(); j++) {</span>
+<span class="nc" id="L101">            String nome_classe = table.getModel().getValueAt(j, 0).toString()</span>
+<span class="nc bnc" id="L102" title="All 28 branches missed.">            if(res.get(0) == '*' || res.get(0) == nome_classe || (ricerca!=null &amp;&amp; nome_classe.contains(ricerca))){</span>
+<span class="nc" id="L103">                pass=true</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">                if(res.get(1).toInteger()&lt;Integer.parseInt(table.getModel().getValueAt(j,1) as String)){</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">                    if (res.get(2) == 'f') {</span>
+<span class="nc" id="L106">                        throw new ThresholdExceededException(&quot;La soglia del parametro &quot; + res.get(0) + &quot; e stata superata&quot;);</span>
+<span class="nc bnc" id="L107" title="All 4 branches missed.">                    } else if (res.get(2) == 'w') {</span>
+                        //idea priorittizare rispetto in base alla differenza tra la soglia impostato e della classe considerata ma il problema Ã¨ che si deve fare per ogni parametro ;-(
+<span class="nc" id="L109">                        WarningMessage war = new WarningMessage(j, 'WARNING:' + res.get(0) + ' Soglia superata della classe : ' + table.getModel().getValueAt(j, 0).toString(), null, null)</span>
+<span class="nc" id="L110">                        println war.getMessage()</span>
+                    }
+                }
+            }
+<span class="nc" id="L114">        }</span>
+
+<span class="nc bnc" id="L116" title="All 4 branches missed.">        if(!pass) throw new InvalidClassException(&quot;Nome classe non valido&quot;)</span>
+    }
+
+   @TaskAction
+/*
+la lettura del file di configurazione non accetta spazi vuoi.
+Dobbiamo rivedere la sua lettura oppure no?
+ */
+void prova() {
+
+   //aggiungere try catch per pulizia e corretezza programma
+<span class="nc" id="L127">   InputStream input = new FileInputStream(file2.get())</span>
+<span class="nc" id="L128">   Properties prop = new Properties()</span>
+<span class="nc" id="L129">   prop.load(input)</span>
+<span class="nc" id="L130">   String lim = &quot;,&quot;</span>
+<span class="nc" id="L131">String key =prop.keySet().iterator().next()</span>
+<span class="nc" id="L132">String valor = prop.get(key).toString()</span>
+      //con i limitatori prendo i dati che mi interessano
+<span class="nc bnc" id="L134" title="All 4 branches missed.">       Vector&lt;String&gt; res = splitString(valor, lim);</span>
+      // leggo il file contente la tabella
+<span class="nc" id="L136">       JTable table</span>
+
+      try {
+<span class="nc" id="L139">         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(key)));</span>
+<span class="nc" id="L140">         table = (JTable) ois.readObject();</span>
+<span class="nc" id="L141">         ois.close();</span>
+<span class="nc" id="L142">      }</span>
+      catch(Exception e) {
+<span class="nc" id="L144">        e.print(&quot;Nome file non valido o inesistente&quot;)</span>
+
+<span class="nc" id="L146">      }</span>
+
+      //trovo il numero della colonna da considerare
+<span class="nc" id="L149">      int column =0</span>
+
+<span class="nc bnc" id="L151" title="All 2 branches missed.">       if(key.endsWith(&quot;Risultati.txt&quot;)) {</span>
+<span class="nc" id="L152">           column = ContaColonna(res, table)</span>
+
+       }
+
+
+
+<span class="nc bnc" id="L158" title="All 16 branches missed.">    if (column != 0) ControlloTabella(column, res, table)</span>
+<span class="nc bnc" id="L159" title="All 16 branches missed.">    if (column == 0) ControlloTabellaNoc(res, table)</span>
+
+
+
+
+
+
+
+
+
+
+
+}
+   }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -3,7 +3,6 @@ package tesi;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -13,26 +12,23 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DocumentiTest {
-    private  static ArrayList<String> listf = new ArrayList<>();
-    @BeforeAll
-    public static void setUpBeforeClass(){
+        private  static ArrayList<String> listf = new ArrayList<>();
 
-        Documenti doc = new Documenti();
-        InputStream in = new ByteArrayInputStream("C#".getBytes());
-        Scanner sc = new Scanner(in);
-        listf=doc.listf("C#",listf, sc);
+        @BeforeAll
+        public static void setUpBeforeClass(){
+                Documenti doc = new Documenti();
+                InputStream in = new ByteArrayInputStream("C#".getBytes());
+                Scanner sc = new Scanner(in);
+                listf=doc.listf("C#",listf, sc);
+        }
 
+        @Test
+        void testListf(){
+                ListDocument list= new ListDocument();
 
-    }
-
-@Test
-void TestListf(){
-
-        ListDocument list= new ListDocument();
-
-        Collections.sort(listf);
-        Collections.sort(list.getListClass());
-        assertTrue(list.getListClass().equals(listf));
-}
+                Collections.sort(listf);
+                Collections.sort(list.getListClass());
+                assertTrue(list.getListClass().equals(listf));
+        }
 
 }
