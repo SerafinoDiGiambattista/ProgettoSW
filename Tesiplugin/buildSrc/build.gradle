@@ -40,7 +40,7 @@ dependencies {
 gradlePlugin {
     // Define the plugin
     plugins {
-        greeting {
+        prova {
             id = 'controllPlugin.prova'
             implementationClass = 'pluginTesi.ControllPlugin'
         }
