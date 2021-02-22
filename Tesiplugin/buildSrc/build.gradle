@@ -27,7 +27,7 @@ dependencies {
     testImplementation('org.spockframework:spock-core:1.3-groovy-2.5') {
         exclude module: 'groovy-all'
     }
-     // Use JUnit Jupiter API for testing.
+    // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 
     // Use JUnit Jupiter Engine for testing.
@@ -35,7 +35,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
- }
+}
 
 gradlePlugin {
     // Define the plugin
@@ -57,18 +57,37 @@ sourceSets {
         compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
         runtimeClasspath += output + compileClasspath
     }
- }
+}
 
 
 gradlePlugin.testSourceSets(sourceSets.functionalTest)
 configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
 
 // Add a task to run the functional tests
-tasks.register('functionalTest', Test) {
+task functionalTest(type: Test) {
+    description = 'Runs the functional tests.'
+    group = 'verification'
     testClassesDirs = sourceSets.functionalTest.output.classesDirs
     classpath = sourceSets.functionalTest.runtimeClasspath
 
- }
+
+    dependsOn 'pluginUnderTestMetadata'
+
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    classpath = sourceSets.functionalTest.runtimeClasspath
+
+    doLast {
+         def jacocoReportFile = extensions.getByType(JacocoTaskExtension).destinationFile
+        def retryCount = 0
+        while((!jacocoReportFile.exists() || !jacocoReportFile.renameTo(jacocoReportFile)) && retryCount < 100){
+            retryCount++
+            println "Waiting for testkit.exec to be released ($retryCount)"
+            Thread.sleep(100)
+        }
+    }
+}
+
+
 
 
 tasks.named('check') {
