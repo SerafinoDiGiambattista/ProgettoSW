@@ -66,7 +66,7 @@ public class ListDocument{
     
     
     
-        public ArrayList<String> getListClass(){
+        public ArrayList<String> getListClassLinux(){
                 ArrayList<String> files= new ArrayList<String>();
                 File file = new File("C#/Person/Person.xml");
                 files.add(file.getAbsolutePath());
@@ -76,5 +76,17 @@ public class ListDocument{
             
                 return files;
         }
+    public ArrayList<String> getListClassWindows(){
+                ArrayList<String> files= new ArrayList<String>();
+        files.add("C#\\ClasseA.xml");
+        files.add("C#\\ClasseB.xml");
+        files.add("C#\\ClasseC.xml");
+            File file = new File("C#/Person/Person.xml");
+
+        files.add(file.getAbsolutePath());
+        return files;
+    }
+
+
 }
 

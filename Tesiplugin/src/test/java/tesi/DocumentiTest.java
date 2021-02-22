@@ -25,10 +25,11 @@ public class DocumentiTest {
         @Test
         void testListf(){
                 ListDocument list= new ListDocument();
-
-                Collections.sort(listf);
-                Collections.sort(list.getListClass());
-                assertTrue(list.getListClass().equals(listf));
+if(System.getProperty("os.name").equals("Linux")) {
+        Collections.sort(listf);
+        Collections.sort(list.getListClassLinux());
+        assertTrue(list.getListClassLinux().equals(listf));
+}
         }
 
 }
