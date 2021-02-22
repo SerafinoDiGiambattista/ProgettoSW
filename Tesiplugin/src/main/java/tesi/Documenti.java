@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 
 public class Documenti {
-
+private String os = System.getProperty("os.name");
 	public Documenti() {
 
 	}
@@ -30,9 +30,13 @@ public class Documenti {
 				if(  file.getName().endsWith(".cs")) {
 					String name = file.getName().replace("cs", "xml");
 
-					//System.out.println("\n"+file.getParent());
-					processBuilder.command( "srcML-Win-64\\srcML-Win\\bin\\srcml", file.getAbsolutePath(), "-o", file.getParent()+"\\"+name);
+					if(os.equals("Linux")){
+					processBuilder.command( "srcml_1.0.0-1_ubuntu20.04/bin/srcml", file.getAbsolutePath(), "-o", file.getParent()+"/"+name);
+		          }
+		          if(os.equals("Windows")){
+		          processBuilder.command( "srcML-Win-64\\srcML-Win\\bin\\srcml", file.getAbsolutePath(), "-o", file.getParent()+"\\"+name);
 		          
+		          }
 					try {
 						java.lang.Process process =	processBuilder.start();
 						InputStream inputStream = process.getInputStream();
@@ -45,8 +49,13 @@ public class Documenti {
 					}catch (IOException e) {
 						e.printStackTrace();
 					}
-
+						
+					if(os.equals("Linux")){
+					files.add( file.getParent()+"/"+name);
+					}
+					if(os.equals("Windows")){
 					files.add( file.getParent()+"\\"+name);
+					}
 				}
 
 			}else if (file.isDirectory()) {

@@ -35,6 +35,7 @@ dependencies {
 
 }
 
+
 application {
     // Define the main class for the application.
     mainClass = 'tesi.Process'
@@ -43,12 +44,11 @@ run{
     standardInput = System.in
 }
 
-apply plugin: ControllPlugin
+apply plugin: pluginTesi.ControllPlugin
 prova {
-    estensione {
-        file1 = file('config/Controll/config.properties')
+        file2 = file('config/Controll/config.properties')
     }
-}
+
 
 checkstyle {
     toolVersion = checkstyleVersion
@@ -57,12 +57,11 @@ checkstyle {
 
 
 
-//codenarc{
-//
-//  toolVersion= codeNarcVersion
-// config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
+codenarc{
 
-//}
+  toolVersion= codeNarcVersion
+ config = rootProject.resources.text.fromFile('plugin-stan/codenarc/rules.groovy')
+}
 
 
 checkstyleMain {
@@ -72,9 +71,9 @@ checkstyleTest {
     source ='src/test/java'
 }
 
-//codenarcMain{
-//  source = 'buildSrc/src/main/groovy'
-//}
+codenarcMain{
+  source = 'buildSrc/src/main/groovy'
+}
 
 test {
     useJUnitPlatform()
