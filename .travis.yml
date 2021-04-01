@@ -20,6 +20,8 @@ script:
 
 notifications:
   slack: progettosw:DYwOQxciENXZRcleC0E0DgY4
-
+  
+  email: j.inglese@studenti.unisannio.it
+         s.digiambattista1@studenti.unisannio.it
   on_success: always
   on_failure: always
